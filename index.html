@@ -685,11 +685,11 @@ function handleSubmit(e) {
   // Disable button while submitting
   if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting...'; }
   
-  // POST to LaunchList
-  fetch('https://getlaunchlist.com/s/tMLE9k', {
+  // POST to our API (sends welcome email via Resend + forwards to LaunchList)
+  fetch('/api/subscribe', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: 'email=' + encodeURIComponent(emailVal)
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: emailVal })
   })
   .then(function() {
     form.classList.add('hide');
@@ -699,7 +699,6 @@ function handleSubmit(e) {
     updateSpots();
   })
   .catch(function() {
-    // Still show success — LaunchList may block CORS but still registers the email
     form.classList.add('hide');
     consent.style.display = 'none';
     msg.classList.add('show');
