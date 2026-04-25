@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#080809" />
+    <title>Privacy Policy — ForgeFit</title>
+    <meta name="description" content="ForgeFit privacy policy. What we collect, how we use it, and how to delete your account." />
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        background: #080809;
+        color: #e7e7ea;
+        line-height: 1.55;
+        font-size: 16px;
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 64px 24px 96px;
+      }
+      h1 {
+        font-size: 32px;
+        margin: 0 0 8px;
+        color: #d4ff3a;
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: 20px;
+        margin: 40px 0 12px;
+        color: #fff;
+      }
+      p, li { color: #c5c5cb; }
+      a { color: #d4ff3a; }
+      .meta { color: #76767e; font-size: 14px; margin-bottom: 32px; }
+      ul { padding-left: 20px; }
+      hr { border: 0; border-top: 1px solid #222226; margin: 48px 0; }
+      .footer { color: #76767e; font-size: 13px; }
+      .footer a { color: #c5c5cb; text-decoration: none; }
+      .footer a:hover { color: #d4ff3a; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Privacy Policy</h1>
+      <p class="meta">Last updated: 25 April 2026</p>
+
+      <p>
+        ForgeFit ("we", "us", "the app") is an iOS fitness tracking application developed by Campbell Blair.
+        This policy explains what personal data we collect, why, who we share it with, and how to delete it.
+      </p>
+
+      <h2>1. What we collect</h2>
+      <ul>
+        <li><strong>Account info:</strong> email address, display name, and password (hashed). If you sign in with Apple or Google, we receive only the basic identity tokens those providers return.</li>
+        <li><strong>Fitness data you log:</strong> workouts, exercises, sets, reps, weights, body weight, and any progress photos or notes you add.</li>
+        <li><strong>Subscription info:</strong> Stripe customer ID, subscription tier, billing status. We never see or store your card details — Stripe handles those.</li>
+        <li><strong>Diagnostics:</strong> crash reports and anonymized usage events (via Sentry) to help us fix bugs.</li>
+        <li><strong>Device info:</strong> iOS version and app version, only as part of crash reports.</li>
+      </ul>
+
+      <h2>2. What we do with it</h2>
+      <ul>
+        <li>Authenticate you when you sign in.</li>
+        <li>Store your workouts so you can see your progress across devices.</li>
+        <li>Generate AI workout plans and coaching responses (your prompts are sent to Anthropic's Claude API; see below).</li>
+        <li>Process subscription payments (via Stripe).</li>
+        <li>Send transactional email — sign-up confirmation, password reset, billing notices (via Resend).</li>
+        <li>Diagnose crashes and improve the app.</li>
+      </ul>
+      <p>We do not sell your data. We do not use it for advertising. We do not share it with anyone except the service providers below, who only see what they need to do their job.</p>
+
+      <h2>3. Service providers we use</h2>
+      <ul>
+        <li><strong>Supabase</strong> — authentication and database hosting.</li>
+        <li><strong>Vercel</strong> — server hosting.</li>
+        <li><strong>Stripe</strong> — subscription billing.</li>
+        <li><strong>Anthropic (Claude)</strong> — AI workout generation and coaching. Your prompts are processed under <a href="https://www.anthropic.com/legal/privacy">Anthropic's privacy policy</a>.</li>
+        <li><strong>Sentry</strong> — error and crash diagnostics.</li>
+        <li><strong>Resend</strong> — transactional email delivery.</li>
+        <li><strong>Apple</strong> — Sign In with Apple, App Store subscription receipts.</li>
+        <li><strong>Google</strong> — Sign In with Google.</li>
+      </ul>
+
+      <h2>4. Data retention</h2>
+      <p>We keep your data for as long as your account exists. When you delete your account, we delete your profile, workouts, and account data within 30 days, except where we are legally required to keep records (e.g. payment records, which Stripe retains for tax and audit purposes).</p>
+
+      <h2>5. How to delete your account</h2>
+      <p>In the app: <em>Settings → Account → Delete account</em>. Or email us at <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a> from the address on your account and we will delete it within 30 days.</p>
+
+      <h2>6. Your rights</h2>
+      <p>Depending on where you live (EU/UK GDPR, California CCPA, Australia Privacy Act), you have the right to access, correct, export, or delete your personal data. Email <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a> to make a request.</p>
+
+      <h2>7. Children</h2>
+      <p>ForgeFit is rated for users 16 and over. We do not knowingly collect data from anyone under 16. If you believe a child under 16 has signed up, email us and we will delete the account.</p>
+
+      <h2>8. Security</h2>
+      <p>Passwords are hashed by Supabase. Data in transit is encrypted via TLS. Card details never touch our servers. No system is perfectly secure — if you believe your account has been compromised, change your password and email us immediately.</p>
+
+      <h2>9. Changes to this policy</h2>
+      <p>If we change this policy materially, we will notify you in-app and update the "Last updated" date above.</p>
+
+      <h2>10. Contact</h2>
+      <p>
+        Campbell Blair<br />
+        Email: <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a>
+      </p>
+
+      <hr />
+
+      <p class="footer">
+        <a href="/">← Back to ForgeFit</a> · <a href="/terms.html">Terms of Service</a>
+      </p>
+    </main>
+  </body>
+</html>
