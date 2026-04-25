@@ -44,25 +44,25 @@ export default async function handler(req, res) {
   }
   const normalEmail = email.toLowerCase().trim();
 
-  // Determine position BEFORE adding (so this user gets the next slot)
-  const position = await getWaitlistPosition();
+  // Resend free tier is 2 req/sec — sequence carefully:
+  //   1. contacts.list (Resend #1) — get position
+  //   2. emails.send (Resend #2) — main outcome
+  //   3. small delay
+  //   4. contacts.create (Resend #3) — add to audience for future broadcasts
+  // LaunchList (different service) fires in parallel with no Resend cost.
 
-  // Add to Resend audience (for future broadcasts) + LaunchList (legacy)
-  await Promise.all([
-    addToAudience(normalEmail),
-    fetch('https://getlaunchlist.com/s/tMLE9k', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'email=' + encodeURIComponent(normalEmail),
-    }).catch(() => null),
-  ]);
+  const position = await getWaitlistPosition();
+  fetch('https://getlaunchlist.com/s/tMLE9k', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'email=' + encodeURIComponent(normalEmail),
+  }).catch((e) => console.error('LaunchList forward failed', e));
 
   const positionLine = position ? `You're <strong>#${position}</strong> on the list.` : `You're on the list.`;
   const subject = position ? `You're #${position} on the ForgeFit waitlist 🏋️` : `You're on the ForgeFit waitlist 🏋️`;
 
-  const { error } = await resend.emails.send({
+  const { data, error } = await resend.emails.send({
     from: 'ForgeFit <noreply@forgefit.fitness>',
-    replyTo: 'hello@forgefit.fitness',
     to: [normalEmail],
     subject,
     html: `<!DOCTYPE html>
@@ -149,5 +149,9 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Failed to send email' });
   }
 
-  return res.status(200).json({ success: true, position });
+  // Email sent — wait past rate limit window then add to audience
+  await new Promise((r) => setTimeout(r, 700));
+  await addToAudience(normalEmail);
+
+  return res.status(200).json({ success: true, position, emailId: data?.id });
 }
