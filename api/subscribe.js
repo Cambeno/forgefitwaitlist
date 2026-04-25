@@ -102,108 +102,166 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="supported-color-schemes" content="dark" />
+    <meta name="color-scheme" content="dark only" />
+    <meta name="supported-color-schemes" content="dark only" />
     <title>ForgeFit</title>
+    <!--[if mso]>
+    <style>table,td,div,h1,p {font-family: Arial, sans-serif !important;}</style>
+    <![endif]-->
   </head>
-  <body style="margin:0;padding:0;background:#080809;color:#FFFFFF;-webkit-font-smoothing:antialiased;">
-    <!-- Preheader (hidden, shows in inbox preview) -->
+  <body bgcolor="#080809" style="margin:0;padding:0;background-color:#080809 !important;background:#080809 !important;color:#FFFFFF;-webkit-font-smoothing:antialiased;width:100%;">
     <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#080809;">
       ${previewText}
     </div>
 
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#080809;">
+    <!-- Full-width dark canvas — repeats in case Gmail strips body bg -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080809" style="background-color:#080809 !important;background:#080809 !important;width:100%;">
       <tr>
-        <td align="center" style="padding:48px 16px;">
-          <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
-
-            <!-- Logo -->
+        <td bgcolor="#080809" align="center" style="background-color:#080809;padding:0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080809" style="background-color:#080809;width:100%;max-width:100%;">
             <tr>
-              <td align="center" style="padding-bottom:32px;">
-                <img src="${logoUrl}" alt="ForgeFit" width="64" height="64" style="display:block;border:0;outline:0;width:64px;height:64px;" />
-              </td>
-            </tr>
+              <td bgcolor="#080809" align="center" style="background-color:#080809;padding:48px 16px;">
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#080809" style="max-width:600px;width:100%;background-color:#080809;">
 
-            <!-- Hero card -->
-            <tr>
-              <td style="background:#14141A;border:1px solid #22222A;border-radius:20px;padding:48px 40px 40px;">
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-
-                  ${position ? `
-                  <!-- Big position number -->
+                  <!-- Lime accent bar -->
                   <tr>
-                    <td align="center" style="padding-bottom:8px;">
-                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8F542;">
-                        Your spot
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td align="center" style="padding-bottom:8px;">
-                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:80px;font-weight:900;letter-spacing:-4px;color:#FFFFFF;line-height:1;">
-                        ${heroNumber}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td align="center" style="padding-bottom:32px;">
-                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#9A9AA3;">
-                        ${heroLabel}
-                      </p>
-                    </td>
-                  </tr>
-                  ` : `
-                  <tr>
-                    <td align="center" style="padding-bottom:32px;">
-                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:32px;font-weight:900;letter-spacing:-1px;color:#FFFFFF;line-height:1.1;">
-                        You're on the list.
-                      </p>
-                    </td>
-                  </tr>
-                  `}
-
-                  <!-- Headline + body -->
-                  <tr>
-                    <td style="padding-bottom:16px;">
-                      <h1 style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;color:#FFFFFF;line-height:1.25;">
-                        Train Smarter. Get Stronger.
-                      </h1>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding-bottom:32px;">
-                      <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;color:#9A9AA3;line-height:1.6;">
-                        Thanks for joining ForgeFit early access. You're one of the first to get the AI gym coach built for serious lifters — not another logbook.
-                      </p>
-                    </td>
-                  </tr>
-
-                  <!-- Feature list -->
-                  <tr>
-                    <td style="padding-bottom:32px;">
-                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                        <tr>
-                          <td style="padding-bottom:14px;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#C8F542;">
-                            What you're getting
-                          </td>
-                        </tr>
-                        ${featureRow('Ember', 'Your AI coach in your pocket')}
-                        ${featureRow('AI workouts', 'Personalised plans that adapt as you progress')}
-                        ${featureRow('Progressive overload', 'Smart suggestions every set, every session')}
-                        ${featureRow('Strength analytics', 'PRs, ratios, ranks — Bronze to Ultimate Chad')}
-                      </table>
-                    </td>
-                  </tr>
-
-                  <!-- CTA -->
-                  <tr>
-                    <td align="center" style="padding-bottom:8px;">
+                    <td bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:24px;">
                       <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                         <tr>
-                          <td style="background:#C8F542;border-radius:12px;">
-                            <a href="${appUrl}" style="display:inline-block;padding:16px 32px;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:0.3px;color:#080809;text-decoration:none;">
-                              Visit forgefit.fitness →
-                            </a>
+                          <td bgcolor="#C8F542" height="3" width="48" style="background-color:#C8F542;line-height:3px;font-size:0;border-radius:2px;">&nbsp;</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Logo -->
+                  <tr>
+                    <td bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:8px;">
+                      <img src="${logoUrl}" alt="ForgeFit" width="72" height="72" style="display:block;border:0;outline:0;width:72px;height:72px;" />
+                    </td>
+                  </tr>
+
+                  <!-- Wordmark under logo -->
+                  <tr>
+                    <td bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:40px;">
+                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:4px;color:#5A5A63;text-transform:uppercase;">
+                        FORGE<span style="color:#C8F542;">FIT</span>
+                      </p>
+                    </td>
+                  </tr>
+
+                  <!-- Hero card with lime top border -->
+                  <tr>
+                    <td bgcolor="#0F0F14" style="background-color:#0F0F14;border-top:3px solid #C8F542;border-radius:0 0 20px 20px;padding:48px 40px 40px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F0F14" style="background-color:#0F0F14;">
+
+                        ${position ? `
+                        <tr>
+                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
+                            <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C8F542;">
+                              ▸ Your spot
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
+                            <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:96px;font-weight:900;letter-spacing:-5px;color:#C8F542;line-height:1;text-shadow:0 0 32px rgba(200,245,66,0.3);">
+                              ${heroNumber}
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:36px;">
+                            <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#9A9AA3;">
+                              ${heroLabel}
+                            </p>
+                          </td>
+                        </tr>
+                        ` : `
+                        <tr>
+                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:36px;">
+                            <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:36px;font-weight:900;letter-spacing:-1px;color:#C8F542;line-height:1.1;">
+                              You're in.
+                            </p>
+                          </td>
+                        </tr>
+                        `}
+
+                        <tr>
+                          <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:16px;">
+                            <h1 style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;color:#FFFFFF;line-height:1.25;">
+                              Train Smarter. <span style="color:#C8F542;">Get Stronger.</span>
+                            </h1>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:32px;">
+                            <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;color:#9A9AA3;line-height:1.6;">
+                              Thanks for joining ForgeFit early access. You're one of the first to get the AI gym coach built for serious lifters — not another logbook.
+                            </p>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:32px;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F0F14" style="background-color:#0F0F14;">
+                              <tr>
+                                <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:18px;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C8F542;">
+                                  ━━ What you're getting
+                                </td>
+                              </tr>
+                              ${featureRow('Ember', 'Your AI coach in your pocket')}
+                              ${featureRow('AI workouts', 'Personalised plans that adapt as you progress')}
+                              ${featureRow('Progressive overload', 'Smart suggestions every set, every session')}
+                              ${featureRow('Strength analytics', 'PRs, ratios, ranks — Bronze to Ultimate Chad')}
+                            </table>
+                          </td>
+                        </tr>
+
+                        <!-- CTA -->
+                        <tr>
+                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                              <tr>
+                                <td bgcolor="#C8F542" style="background-color:#C8F542;border-radius:12px;box-shadow:0 4px 24px rgba(200,245,66,0.25);">
+                                  <a href="${appUrl}" style="display:inline-block;padding:18px 36px;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;font-weight:800;letter-spacing:0.5px;color:#080809;text-decoration:none;text-transform:uppercase;">
+                                    Visit forgefit.fitness →
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Sub-message under card -->
+                  <tr>
+                    <td bgcolor="#080809" style="background-color:#080809;padding:32px 40px 0;">
+                      <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#9A9AA3;line-height:1.6;">
+                        We'll email you the moment your spot opens up. Until then — stay consistent. Every set counts.
+                      </p>
+                      <p style="margin:24px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#FFFFFF;">
+                        — Campbell
+                        <span style="color:#5A5A63;">· Founder, ForgeFit</span>
+                      </p>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td bgcolor="#080809" style="background-color:#080809;padding:48px 40px 24px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080809" style="background-color:#080809;border-top:1px solid #22222A;">
+                        <tr>
+                          <td bgcolor="#080809" style="background-color:#080809;padding-top:24px;">
+                            <p style="margin:0 0 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;color:#5A5A63;line-height:1.5;">
+                              You received this because you joined the ForgeFit waitlist at <a href="${appUrl}" style="color:#C8F542;text-decoration:none;">forgefit.fitness</a>.
+                            </p>
+                            <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;color:#5A5A63;">
+                              © 2026 ForgeFit <span style="color:#C8F542;">·</span> Train Smarter <span style="color:#C8F542;">·</span> Get Stronger
+                            </p>
                           </td>
                         </tr>
                       </table>
@@ -213,38 +271,6 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
                 </table>
               </td>
             </tr>
-
-            <!-- Sub-message -->
-            <tr>
-              <td style="padding:32px 40px 0;">
-                <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#9A9AA3;line-height:1.6;">
-                  We'll email you the moment your spot opens up. Until then — stay consistent. Every set counts.
-                </p>
-                <p style="margin:24px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#FFFFFF;">
-                  — Campbell
-                  <span style="color:#5A5A63;">· Founder, ForgeFit</span>
-                </p>
-              </td>
-            </tr>
-
-            <!-- Footer -->
-            <tr>
-              <td style="padding:48px 40px 0;">
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #22222A;">
-                  <tr>
-                    <td style="padding-top:24px;">
-                      <p style="margin:0 0 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;color:#5A5A63;line-height:1.5;">
-                        You received this because you joined the ForgeFit waitlist at <a href="${appUrl}" style="color:#9A9AA3;text-decoration:none;">forgefit.fitness</a>.
-                      </p>
-                      <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;color:#5A5A63;">
-                        © 2026 ForgeFit · Train Smarter · Get Stronger
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-
           </table>
         </td>
       </tr>
@@ -255,17 +281,21 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
 
 function featureRow(title, desc) {
   return `<tr>
-    <td style="padding:8px 0;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding:10px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F0F14" style="background-color:#0F0F14;">
         <tr>
-          <td width="6" valign="top" style="padding-top:8px;">
-            <div style="width:6px;height:6px;border-radius:50%;background:#C8F542;"></div>
+          <td bgcolor="#0F0F14" width="8" valign="top" style="background-color:#0F0F14;padding-top:8px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td bgcolor="#C8F542" width="8" height="8" style="background-color:#C8F542;border-radius:4px;line-height:8px;font-size:0;">&nbsp;</td>
+              </tr>
+            </table>
           </td>
-          <td style="padding-left:14px;">
+          <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-left:16px;">
             <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;color:#FFFFFF;line-height:1.3;">
               ${title}
             </p>
-            <p style="margin:2px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;color:#9A9AA3;line-height:1.4;">
+            <p style="margin:3px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;color:#9A9AA3;line-height:1.4;">
               ${desc}
             </p>
           </td>
