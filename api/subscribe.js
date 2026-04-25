@@ -58,90 +58,13 @@ export default async function handler(req, res) {
     body: 'email=' + encodeURIComponent(normalEmail),
   }).catch((e) => console.error('LaunchList forward failed', e));
 
-  const positionLine = position ? `You're <strong>#${position}</strong> on the list.` : `You're on the list.`;
-  const subject = position ? `You're #${position} on the ForgeFit waitlist 🏋️` : `You're on the ForgeFit waitlist 🏋️`;
+  const subject = position ? `You're #${position} on the ForgeFit waitlist` : `You're on the ForgeFit waitlist`;
 
   const { data, error } = await resend.emails.send({
     from: 'ForgeFit <noreply@forgefit.fitness>',
     to: [normalEmail],
     subject,
-    html: `<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body style="margin:0;padding:0;background:#050505;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#f0f0f0;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="background:#050505;padding:48px 16px;">
-      <tr>
-        <td align="center">
-          <table width="560" cellpadding="0" cellspacing="0" style="background:#0a0a0a;border-radius:16px;border:1px solid #1a1a1a;overflow:hidden;max-width:560px;width:100%;">
-
-            <tr>
-              <td style="padding:40px 40px 32px;border-bottom:1px solid #1a1a1a;">
-                <p style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#f0f0f0;">
-                  FORGE<span style="color:#A3FF12;">FIT</span>
-                </p>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding:40px;">
-                <h1 style="margin:0 0 16px;font-size:28px;font-weight:800;letter-spacing:-0.5px;color:#f0f0f0;line-height:1.2;">
-                  You're in. 💪
-                </h1>
-                <p style="margin:0 0 24px;font-size:18px;color:#A3FF12;line-height:1.4;font-weight:600;">
-                  ${positionLine}
-                </p>
-                <p style="margin:0 0 24px;font-size:16px;color:#888;line-height:1.6;">
-                  Thanks for joining the ForgeFit beta waitlist. You're one of the first people to get access to the AI gym coach built for serious lifters.
-                </p>
-
-                <table width="100%" cellpadding="0" cellspacing="0" style="background:#111;border:1px solid #1a1a1a;border-radius:12px;margin-bottom:24px;">
-                  <tr>
-                    <td style="padding:24px;">
-                      <p style="margin:0 0 12px;font-size:13px;font-weight:700;letter-spacing:1px;color:#A3FF12;text-transform:uppercase;">What you're getting early access to</p>
-                      <table cellpadding="0" cellspacing="0">
-                        <tr><td style="padding:6px 0;font-size:15px;color:#ccc;">⚡ AI-generated personalised workouts</td></tr>
-                        <tr><td style="padding:6px 0;font-size:15px;color:#ccc;">📈 Smart progressive overload tracking</td></tr>
-                        <tr><td style="padding:6px 0;font-size:15px;color:#ccc;">🏆 Personal records &amp; strength analytics</td></tr>
-                        <tr><td style="padding:6px 0;font-size:15px;color:#ccc;">🤖 Ember — your AI coach in your pocket</td></tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-
-                <p style="margin:0 0 32px;font-size:15px;color:#666;line-height:1.6;">
-                  We'll email you the moment your spot opens up. Until then, stay consistent — every set counts.
-                </p>
-
-                <table cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td style="background:#A3FF12;border-radius:10px;">
-                      <a href="${APP_URL}" style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:700;color:#050505;text-decoration:none;letter-spacing:-0.2px;">
-                        Learn more →
-                      </a>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding:24px 40px;border-top:1px solid #1a1a1a;">
-                <p style="margin:0;font-size:13px;color:#444;line-height:1.6;">
-                  You're receiving this because you signed up at the ForgeFit waitlist.<br/>
-                  © 2026 ForgeFit. <a href="${APP_URL}" style="color:#666;">forgefit.fitness</a>
-                </p>
-              </td>
-            </tr>
-
-          </table>
-        </td>
-      </tr>
-    </table>
-  </body>
-</html>`,
+    html: brandedEmailHtml({ position, appUrl: APP_URL, logoUrl: 'https://forgefitwaitlist.vercel.app/forge-logo.png' }),
   });
 
   if (error) {
@@ -154,4 +77,200 @@ export default async function handler(req, res) {
   await addToAudience(normalEmail);
 
   return res.status(200).json({ success: true, position, emailId: data?.id });
+}
+
+// ── Branded email template ──────────────────────────────────────────────────
+function brandedEmailHtml({ position, appUrl, logoUrl }) {
+  const heroNumber = position ? `#${position}` : '';
+  const heroLabel = position ? 'on the waitlist' : 'on the waitlist';
+  const previewText = position
+    ? `You're #${position} on the ForgeFit waitlist. The AI gym coach is on its way.`
+    : `You're on the ForgeFit waitlist. The AI gym coach is on its way.`;
+
+  // Brand tokens (matched to forgefit/client design system):
+  //   bg          #080809
+  //   card        rgba(255,255,255,0.04) → flattened to #14141A for email
+  //   border      rgba(255,255,255,0.08) → flattened to #22222A
+  //   lime        #C8F542
+  //   lime-dark   #a8d620
+  //   ink         #FFFFFF
+  //   ink-mute    #9A9AA3
+  //   ink-faint   #5A5A63
+
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="supported-color-schemes" content="dark" />
+    <title>ForgeFit</title>
+  </head>
+  <body style="margin:0;padding:0;background:#080809;color:#FFFFFF;-webkit-font-smoothing:antialiased;">
+    <!-- Preheader (hidden, shows in inbox preview) -->
+    <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#080809;">
+      ${previewText}
+    </div>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#080809;">
+      <tr>
+        <td align="center" style="padding:48px 16px;">
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
+
+            <!-- Logo -->
+            <tr>
+              <td align="center" style="padding-bottom:32px;">
+                <img src="${logoUrl}" alt="ForgeFit" width="64" height="64" style="display:block;border:0;outline:0;width:64px;height:64px;" />
+              </td>
+            </tr>
+
+            <!-- Hero card -->
+            <tr>
+              <td style="background:#14141A;border:1px solid #22222A;border-radius:20px;padding:48px 40px 40px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+
+                  ${position ? `
+                  <!-- Big position number -->
+                  <tr>
+                    <td align="center" style="padding-bottom:8px;">
+                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8F542;">
+                        Your spot
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding-bottom:8px;">
+                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:80px;font-weight:900;letter-spacing:-4px;color:#FFFFFF;line-height:1;">
+                        ${heroNumber}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding-bottom:32px;">
+                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#9A9AA3;">
+                        ${heroLabel}
+                      </p>
+                    </td>
+                  </tr>
+                  ` : `
+                  <tr>
+                    <td align="center" style="padding-bottom:32px;">
+                      <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:32px;font-weight:900;letter-spacing:-1px;color:#FFFFFF;line-height:1.1;">
+                        You're on the list.
+                      </p>
+                    </td>
+                  </tr>
+                  `}
+
+                  <!-- Headline + body -->
+                  <tr>
+                    <td style="padding-bottom:16px;">
+                      <h1 style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;color:#FFFFFF;line-height:1.25;">
+                        Train Smarter. Get Stronger.
+                      </h1>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding-bottom:32px;">
+                      <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;color:#9A9AA3;line-height:1.6;">
+                        Thanks for joining ForgeFit early access. You're one of the first to get the AI gym coach built for serious lifters — not another logbook.
+                      </p>
+                    </td>
+                  </tr>
+
+                  <!-- Feature list -->
+                  <tr>
+                    <td style="padding-bottom:32px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td style="padding-bottom:14px;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#C8F542;">
+                            What you're getting
+                          </td>
+                        </tr>
+                        ${featureRow('Ember', 'Your AI coach in your pocket')}
+                        ${featureRow('AI workouts', 'Personalised plans that adapt as you progress')}
+                        ${featureRow('Progressive overload', 'Smart suggestions every set, every session')}
+                        ${featureRow('Strength analytics', 'PRs, ratios, ranks — Bronze to Ultimate Chad')}
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- CTA -->
+                  <tr>
+                    <td align="center" style="padding-bottom:8px;">
+                      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td style="background:#C8F542;border-radius:12px;">
+                            <a href="${appUrl}" style="display:inline-block;padding:16px 32px;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:0.3px;color:#080809;text-decoration:none;">
+                              Visit forgefit.fitness →
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+
+            <!-- Sub-message -->
+            <tr>
+              <td style="padding:32px 40px 0;">
+                <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#9A9AA3;line-height:1.6;">
+                  We'll email you the moment your spot opens up. Until then — stay consistent. Every set counts.
+                </p>
+                <p style="margin:24px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#FFFFFF;">
+                  — Campbell
+                  <span style="color:#5A5A63;">· Founder, ForgeFit</span>
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td style="padding:48px 40px 0;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #22222A;">
+                  <tr>
+                    <td style="padding-top:24px;">
+                      <p style="margin:0 0 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;color:#5A5A63;line-height:1.5;">
+                        You received this because you joined the ForgeFit waitlist at <a href="${appUrl}" style="color:#9A9AA3;text-decoration:none;">forgefit.fitness</a>.
+                      </p>
+                      <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;color:#5A5A63;">
+                        © 2026 ForgeFit · Train Smarter · Get Stronger
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+}
+
+function featureRow(title, desc) {
+  return `<tr>
+    <td style="padding:8px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="6" valign="top" style="padding-top:8px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#C8F542;"></div>
+          </td>
+          <td style="padding-left:14px;">
+            <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;color:#FFFFFF;line-height:1.3;">
+              ${title}
+            </p>
+            <p style="margin:2px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;color:#9A9AA3;line-height:1.4;">
+              ${desc}
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>`;
 }
