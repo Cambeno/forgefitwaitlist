@@ -103,27 +103,51 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no" />
+    <!-- "light dark" tells Gmail/Apple Mail "this email handles both modes itself; do NOT auto-adapt".
+         Without this Gmail iOS aggressively inverts our intentional dark colors. -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
     <title>ForgeFit</title>
     <style>
-      /* Override aggressive client dark-mode adaptation. Gmail mobile sometimes
-         inverts our intentional dark backgrounds when user is in light theme;
-         these !important rules + the bgcolor attrs throughout fight that. */
+      :root { color-scheme: light dark; supported-color-schemes: light dark; }
       body, table, td, div, p, h1, span { box-sizing: border-box; }
       body { margin: 0 !important; padding: 0 !important; background-color: #080809 !important; }
       .ff-canvas { background-color: #080809 !important; }
       .ff-card { background-color: #0F0F14 !important; }
       .ff-lime { color: #C8F542 !important; }
+      .ff-white { color: #FFFFFF !important; }
+      .ff-mute { color: #9A9AA3 !important; }
       .ff-cta-bg { background-color: #C8F542 !important; }
-      u + .body .ff-canvas, /* Outlook.com */
-      [data-ogsc] .ff-canvas /* Gmail dark-mode-aware blocks */ {
-        background-color: #080809 !important;
-      }
-      [data-ogsc] .ff-card { background-color: #0F0F14 !important; }
+      .ff-cta-text { color: #080809 !important; }
+
+      /* Gmail iOS / Android dark-mode hooks. Gmail rewrites attrs with
+         data-ogsc / data-ogsb when adapting; targeting these locks colors. */
+      u + .body .ff-canvas,
+      [data-ogsc] .ff-canvas,
+      [data-ogsb] .ff-canvas { background-color: #080809 !important; }
+      [data-ogsc] .ff-card,
+      [data-ogsb] .ff-card { background-color: #0F0F14 !important; }
       [data-ogsc] .ff-lime { color: #C8F542 !important; }
       [data-ogsc] .ff-white { color: #FFFFFF !important; }
+      [data-ogsc] .ff-mute { color: #9A9AA3 !important; }
+
+      /* Explicit dark-mode rule reaffirms intended palette so Gmail doesn't
+         "fix" it for us. */
+      @media (prefers-color-scheme: dark) {
+        body, .ff-canvas { background-color: #080809 !important; }
+        .ff-card { background-color: #0F0F14 !important; }
+        .ff-lime { color: #C8F542 !important; }
+        .ff-white { color: #FFFFFF !important; }
+        .ff-cta-bg { background-color: #C8F542 !important; }
+        .ff-cta-text { color: #080809 !important; }
+      }
       @media (prefers-color-scheme: light) {
         body, .ff-canvas { background-color: #080809 !important; }
         .ff-card { background-color: #0F0F14 !important; }
+        .ff-lime { color: #C8F542 !important; }
+        .ff-white { color: #FFFFFF !important; }
+        .ff-cta-bg { background-color: #C8F542 !important; }
+        .ff-cta-text { color: #080809 !important; }
       }
     </style>
     <!--[if mso]>
