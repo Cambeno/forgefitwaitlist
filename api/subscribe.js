@@ -270,7 +270,7 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
                               ${featureRow('Ember', 'Your AI coach in your pocket')}
                               ${featureRow('AI workouts', 'Personalised plans that adapt as you progress')}
                               ${featureRow('Progressive overload', 'Smart suggestions every set, every session')}
-                              ${featureRow('Strength analytics', 'PRs, ratios, ranks — Bronze to Ultimate Chad')}
+                              ${featureRow('Strength analytics', 'PRs, ratios, ranks — Copper to Prismatic')}
                             </table>
                           </td>
                         </tr>
