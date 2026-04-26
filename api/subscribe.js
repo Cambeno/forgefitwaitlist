@@ -102,30 +102,51 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark only" />
-    <meta name="supported-color-schemes" content="dark only" />
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no" />
     <title>ForgeFit</title>
+    <style>
+      /* Override aggressive client dark-mode adaptation. Gmail mobile sometimes
+         inverts our intentional dark backgrounds when user is in light theme;
+         these !important rules + the bgcolor attrs throughout fight that. */
+      body, table, td, div, p, h1, span { box-sizing: border-box; }
+      body { margin: 0 !important; padding: 0 !important; background-color: #080809 !important; }
+      .ff-canvas { background-color: #080809 !important; }
+      .ff-card { background-color: #0F0F14 !important; }
+      .ff-lime { color: #C8F542 !important; }
+      .ff-cta-bg { background-color: #C8F542 !important; }
+      u + .body .ff-canvas, /* Outlook.com */
+      [data-ogsc] .ff-canvas /* Gmail dark-mode-aware blocks */ {
+        background-color: #080809 !important;
+      }
+      [data-ogsc] .ff-card { background-color: #0F0F14 !important; }
+      [data-ogsc] .ff-lime { color: #C8F542 !important; }
+      [data-ogsc] .ff-white { color: #FFFFFF !important; }
+      @media (prefers-color-scheme: light) {
+        body, .ff-canvas { background-color: #080809 !important; }
+        .ff-card { background-color: #0F0F14 !important; }
+      }
+    </style>
     <!--[if mso]>
     <style>table,td,div,h1,p {font-family: Arial, sans-serif !important;}</style>
     <![endif]-->
   </head>
-  <body bgcolor="#080809" style="margin:0;padding:0;background-color:#080809 !important;background:#080809 !important;color:#FFFFFF;-webkit-font-smoothing:antialiased;width:100%;">
+  <body class="body" bgcolor="#080809" style="margin:0;padding:0;background-color:#080809;color:#FFFFFF;-webkit-font-smoothing:antialiased;width:100%;">
     <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#080809;">
       ${previewText}
     </div>
 
     <!-- Full-width dark canvas — repeats in case Gmail strips body bg -->
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080809" style="background-color:#080809 !important;background:#080809 !important;width:100%;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ff-canvas" bgcolor="#080809" style="background-color:#080809 !important;background:#080809 !important;width:100%;">
       <tr>
-        <td bgcolor="#080809" align="center" style="background-color:#080809;padding:0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080809" style="background-color:#080809;width:100%;max-width:100%;">
+        <td class="ff-canvas" bgcolor="#080809" align="center" style="background-color:#080809;padding:0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ff-canvas" bgcolor="#080809" style="background-color:#080809;width:100%;max-width:100%;">
             <tr>
-              <td bgcolor="#080809" align="center" style="background-color:#080809;padding:48px 16px;">
+              <td class="ff-canvas" bgcolor="#080809" align="center" style="background-color:#080809;padding:48px 16px;">
                 <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#080809" style="max-width:600px;width:100%;background-color:#080809;">
 
                   <!-- Lime accent bar -->
                   <tr>
-                    <td bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:24px;">
+                    <td class="ff-canvas" bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:24px;">
                       <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td bgcolor="#C8F542" height="3" width="48" style="background-color:#C8F542;line-height:3px;font-size:0;border-radius:2px;">&nbsp;</td>
@@ -136,14 +157,14 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
 
                   <!-- Logo -->
                   <tr>
-                    <td bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:8px;">
+                    <td class="ff-canvas" bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:8px;">
                       <img src="${logoUrl}" alt="ForgeFit" width="72" height="72" style="display:block;border:0;outline:0;width:72px;height:72px;" />
                     </td>
                   </tr>
 
                   <!-- Wordmark under logo -->
                   <tr>
-                    <td bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:40px;">
+                    <td class="ff-canvas" bgcolor="#080809" align="center" style="background-color:#080809;padding-bottom:40px;">
                       <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:4px;color:#5A5A63;text-transform:uppercase;">
                         FORGE<span style="color:#C8F542;">FIT</span>
                       </p>
@@ -152,26 +173,26 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
 
                   <!-- Hero card with lime top border -->
                   <tr>
-                    <td bgcolor="#0F0F14" style="background-color:#0F0F14;border-top:3px solid #C8F542;border-radius:0 0 20px 20px;padding:48px 40px 40px;">
-                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F0F14" style="background-color:#0F0F14;">
+                    <td class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;border-top:3px solid #C8F542;border-radius:0 0 20px 20px;padding:48px 40px 40px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;">
 
                         ${position ? `
                         <tr>
-                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
+                          <td class="ff-card" bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
                             <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C8F542;">
                               ▸ Your spot
                             </p>
                           </td>
                         </tr>
                         <tr>
-                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
+                          <td class="ff-card" bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
                             <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:96px;font-weight:900;letter-spacing:-5px;color:#C8F542;line-height:1;text-shadow:0 0 32px rgba(200,245,66,0.3);">
                               ${heroNumber}
                             </p>
                           </td>
                         </tr>
                         <tr>
-                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:36px;">
+                          <td class="ff-card" bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:36px;">
                             <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#9A9AA3;">
                               ${heroLabel}
                             </p>
@@ -179,7 +200,7 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
                         </tr>
                         ` : `
                         <tr>
-                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:36px;">
+                          <td class="ff-card" bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:36px;">
                             <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:36px;font-weight:900;letter-spacing:-1px;color:#C8F542;line-height:1.1;">
                               You're in.
                             </p>
@@ -188,14 +209,14 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
                         `}
 
                         <tr>
-                          <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:16px;">
+                          <td class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:16px;">
                             <h1 style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;color:#FFFFFF;line-height:1.25;">
                               Train Smarter. <span style="color:#C8F542;">Get Stronger.</span>
                             </h1>
                           </td>
                         </tr>
                         <tr>
-                          <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:32px;">
+                          <td class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:32px;">
                             <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;color:#9A9AA3;line-height:1.6;">
                               Thanks for joining ForgeFit early access. You're one of the first to get the AI gym coach built for serious lifters — not another logbook.
                             </p>
@@ -203,10 +224,10 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
                         </tr>
 
                         <tr>
-                          <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:32px;">
-                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F0F14" style="background-color:#0F0F14;">
+                          <td class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:32px;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;">
                               <tr>
-                                <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:18px;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C8F542;">
+                                <td class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;padding-bottom:18px;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C8F542;">
                                   ━━ What you're getting
                                 </td>
                               </tr>
@@ -220,7 +241,7 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
 
                         <!-- CTA -->
                         <tr>
-                          <td bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
+                          <td class="ff-card" bgcolor="#0F0F14" align="center" style="background-color:#0F0F14;padding-bottom:8px;">
                             <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                               <tr>
                                 <td bgcolor="#C8F542" style="background-color:#C8F542;border-radius:12px;box-shadow:0 4px 24px rgba(200,245,66,0.25);">
@@ -239,7 +260,7 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
 
                   <!-- Sub-message under card -->
                   <tr>
-                    <td bgcolor="#080809" style="background-color:#080809;padding:32px 40px 0;">
+                    <td class="ff-canvas" bgcolor="#080809" style="background-color:#080809;padding:32px 40px 0;">
                       <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:400;color:#9A9AA3;line-height:1.6;">
                         We'll email you the moment your spot opens up. Until then — stay consistent. Every set counts.
                       </p>
@@ -252,10 +273,10 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
 
                   <!-- Footer -->
                   <tr>
-                    <td bgcolor="#080809" style="background-color:#080809;padding:48px 40px 24px;">
-                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080809" style="background-color:#080809;border-top:1px solid #22222A;">
+                    <td class="ff-canvas" bgcolor="#080809" style="background-color:#080809;padding:48px 40px 24px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ff-canvas" bgcolor="#080809" style="background-color:#080809;border-top:1px solid #22222A;">
                         <tr>
-                          <td bgcolor="#080809" style="background-color:#080809;padding-top:24px;">
+                          <td class="ff-canvas" bgcolor="#080809" style="background-color:#080809;padding-top:24px;">
                             <p style="margin:0 0 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;color:#5A5A63;line-height:1.5;">
                               You received this because you joined the ForgeFit waitlist at <a href="${appUrl}" style="color:#C8F542;text-decoration:none;">forgefit.fitness</a>.
                             </p>
@@ -281,17 +302,17 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
 
 function featureRow(title, desc) {
   return `<tr>
-    <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding:10px 0;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F0F14" style="background-color:#0F0F14;">
+    <td class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;padding:10px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;">
         <tr>
-          <td bgcolor="#0F0F14" width="8" valign="top" style="background-color:#0F0F14;padding-top:8px;">
+          <td class="ff-card" bgcolor="#0F0F14" width="8" valign="top" style="background-color:#0F0F14;padding-top:8px;">
             <table role="presentation" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td bgcolor="#C8F542" width="8" height="8" style="background-color:#C8F542;border-radius:4px;line-height:8px;font-size:0;">&nbsp;</td>
               </tr>
             </table>
           </td>
-          <td bgcolor="#0F0F14" style="background-color:#0F0F14;padding-left:16px;">
+          <td class="ff-card" bgcolor="#0F0F14" style="background-color:#0F0F14;padding-left:16px;">
             <p style="margin:0;font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;color:#FFFFFF;line-height:1.3;">
               ${title}
             </p>
