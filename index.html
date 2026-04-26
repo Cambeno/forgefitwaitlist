@@ -384,22 +384,16 @@
       display: flex; align-items: center; gap: 16px;
     }
     .phone-gem {
-      width: 56px; height: 56px;
-      background: conic-gradient(from 45deg, #00D4FF, #B5F23D, #00D4FF);
-      border-radius: 12px;
-      transform: rotate(45deg);
-      box-shadow: 0 0 32px rgba(0, 212, 255, 0.5);
+      width: 64px; height: 64px;
       flex: 0 0 auto;
-      position: relative;
-      animation: gemSpin 8s linear infinite;
+      filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.55));
+      animation: gemFloat 4s ease-in-out infinite alternate;
     }
-    .phone-gem::after {
-      content: '';
-      position: absolute; inset: 8px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent 50%);
-      border-radius: 6px;
+    .phone-gem img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    @keyframes gemFloat {
+      0%   { transform: translateY(-2px) rotate(-3deg); }
+      100% { transform: translateY(2px)  rotate(3deg);  }
     }
-    @keyframes gemSpin { to { transform: rotate(405deg); } }
 
     .phone-rank-info p:first-child {
       font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
@@ -519,12 +513,30 @@
     }
 
     .calc-output { display: flex; flex-direction: column; }
+    .calc-output .tier-head {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 4px;
+    }
+    .calc-output .tier-gem {
+      width: 64px; height: 64px;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 0 16px var(--current-gem, transparent));
+      transition: filter 0.4s, opacity 0.4s;
+      opacity: 0.3;
+      animation: tierBob 3.5s ease-in-out infinite alternate;
+    }
+    .calc-output .tier-gem.is-active { opacity: 1; }
+    .calc-output .tier-gem img { width: 100%; height: 100%; object-fit: contain; }
+    @keyframes tierBob {
+      from { transform: translateY(-3px) rotate(-4deg); }
+      to   { transform: translateY(3px)  rotate(4deg);  }
+    }
     .calc-output .tier-name {
       font-family: var(--display); font-weight: 900;
-      font-size: clamp(40px, 6vw, 64px);
+      font-size: clamp(36px, 5vw, 56px);
       line-height: 1; letter-spacing: -0.03em;
       text-transform: uppercase; color: var(--white);
-      margin-bottom: 4px; transition: color 0.4s;
+      transition: color 0.4s, text-shadow 0.4s;
     }
     .calc-output .tier-flavor { font-size: 14px; color: var(--mute); margin-bottom: 28px; min-height: 22px; }
     .calc-output .tier-bar {
@@ -547,14 +559,14 @@
     /* ─── Tier ladder ────────────────────────────────────────────── */
     .ladder { display: grid; gap: 12px; }
     .tier-row {
-      display: grid; grid-template-columns: 36px 16px 1fr;
+      display: grid; grid-template-columns: 36px 36px 1fr;
       gap: 14px; align-items: center;
-      padding: 20px 24px;
+      padding: 18px 24px;
       background: var(--card); border: 1px solid var(--border);
       border-radius: 14px;
       transition: transform 0.3s var(--ease-out), border-color 0.3s, box-shadow 0.3s, background 0.3s;
     }
-    @media (min-width: 700px) { .tier-row { grid-template-columns: 36px 16px 200px 1fr 120px; } }
+    @media (min-width: 700px) { .tier-row { grid-template-columns: 36px 36px 200px 1fr 120px; } }
     .tier-row:hover {
       transform: translateX(8px);
       border-color: var(--lime);
@@ -585,18 +597,113 @@
     .tier-row[data-tier-index="5"] .ratio-tag { color: #E8174D; }
     .tier-row[data-tier-index="6"] .ratio-tag { color: #B5F23D; }
     .tier-row .gem-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--gem-color, var(--lime));
-      box-shadow: 0 0 12px var(--gem-color, var(--lime));
+      width: 36px; height: 36px;
       flex: 0 0 auto;
+      filter: drop-shadow(0 0 10px var(--gem-color, var(--lime)));
+      transition: transform 0.4s var(--ease-out);
     }
-    .tier-row[data-tier-index="0"] .gem-dot { --gem-color: #CD7F32; }
-    .tier-row[data-tier-index="1"] .gem-dot { --gem-color: #9EA9B4; }
-    .tier-row[data-tier-index="2"] .gem-dot { --gem-color: #FFD60A; }
-    .tier-row[data-tier-index="3"] .gem-dot { --gem-color: #00D4FF; }
-    .tier-row[data-tier-index="4"] .gem-dot { --gem-color: #00C869; }
-    .tier-row[data-tier-index="5"] .gem-dot { --gem-color: #E8174D; }
-    .tier-row[data-tier-index="6"] .gem-dot { --gem-color: #B5F23D; }
+    .tier-row .gem-dot img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .tier-row:hover .gem-dot { transform: rotate(-8deg) scale(1.1); }
+    .tier-row[data-tier-index="0"] .gem-dot { --gem-color: rgba(205,127,50,0.55); }
+    .tier-row[data-tier-index="1"] .gem-dot { --gem-color: rgba(158,169,180,0.55); }
+    .tier-row[data-tier-index="2"] .gem-dot { --gem-color: rgba(255,214,10,0.55); }
+    .tier-row[data-tier-index="3"] .gem-dot { --gem-color: rgba(0,212,255,0.55); }
+    .tier-row[data-tier-index="4"] .gem-dot { --gem-color: rgba(0,200,105,0.55); }
+    .tier-row[data-tier-index="5"] .gem-dot { --gem-color: rgba(232,23,77,0.55); }
+    .tier-row[data-tier-index="6"] .gem-dot { --gem-color: rgba(181,242,61,0.6); }
+
+    /* ─── Trophies showcase ─────────────────────────────────────────── */
+    .trophy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (min-width: 700px) { .trophy-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+    @media (min-width: 1000px) { .trophy-grid { grid-template-columns: repeat(5, 1fr); gap: 24px; } }
+
+    .trophy-card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(20, 20, 26, 0.7), rgba(15, 15, 20, 0.4));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px 16px 24px;
+      overflow: hidden;
+      transition: transform 0.4s var(--ease-out), border-color 0.3s, background 0.3s;
+    }
+    .trophy-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(181, 242, 61, 0.08), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    .trophy-card:hover { transform: translateY(-6px); border-color: rgba(181, 242, 61, 0.4); }
+    .trophy-card:hover::before { opacity: 1; }
+    .trophy-card:hover .trophy-img { transform: scale(1.06) rotate(-1deg); }
+
+    .trophy-img-wrap {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .trophy-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 8%;
+      left: 15%; right: 15%;
+      height: 14px;
+      background: radial-gradient(ellipse, rgba(181, 242, 61, 0.35), transparent 70%);
+      filter: blur(4px);
+      z-index: 0;
+    }
+    .trophy-img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      position: relative; z-index: 1;
+      transition: transform 0.5s var(--ease-out);
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+    }
+
+    .trophy-meta { text-align: center; }
+    .trophy-name {
+      font-family: var(--display); font-weight: 800; font-size: 15px;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .trophy-tier {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 1.5px; color: #B5F23D; text-transform: uppercase;
+    }
+
+    .trophy-foot {
+      margin-top: 32px;
+      display: flex; flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    @media (min-width: 600px) {
+      .trophy-foot { flex-direction: row; align-items: center; gap: 24px; }
+    }
+    .trophy-foot .copy {
+      font-size: 14px;
+      color: var(--mute);
+    }
+    .trophy-foot .copy strong { color: var(--white); font-weight: 700; }
+    .trophy-foot .stat-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 1.5px; color: var(--mute);
+      text-transform: uppercase;
+    }
+    .trophy-foot .stat-pill strong { color: var(--white); font-weight: 700; }
 
     /* ─── Ember ──────────────────────────────────────────────────── */
     .ember { display: grid; gap: 32px; grid-template-columns: 1fr; }
@@ -807,7 +914,7 @@
                   </div>
 
                   <div class="phone-rank-card">
-                    <div class="phone-gem"></div>
+                    <div class="phone-gem"><img src="/ranks/diamond.webp" alt="Diamond rank" width="64" height="64" loading="eager" /></div>
                     <div class="phone-rank-info">
                       <p>Overall</p>
                       <h3>DIAMOND</h3>
@@ -888,7 +995,10 @@
 
           <div class="calc-output">
             <h3>Your tier</h3>
-            <p class="tier-name" id="tier-name">—</p>
+            <div class="tier-head">
+              <div class="tier-gem" id="tier-gem"><img src="/ranks/copper.webp" alt="" width="64" height="64" /></div>
+              <p class="tier-name" id="tier-name">—</p>
+            </div>
             <p class="tier-flavor" id="tier-flavor">Enter your numbers to find your rank.</p>
             <div class="tier-bar"><div class="tier-fill" id="tier-fill"></div></div>
             <div class="ratio-list">
@@ -923,6 +1033,71 @@
         </div>
 
         <div class="ladder reveal" id="ladder"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="section-tag"><span class="num">04</span><span>Trophies</span></span>
+          <h2>Earn the <span class="lime">trophies</span>.</h2>
+          <p>35 strength trophies — 5 lifts, 7 tiers each. Render them as your wallpaper. Below: the apex of every lift, Prismatic.</p>
+        </div>
+
+        <div class="trophy-grid reveal">
+          <div class="trophy-card">
+            <div class="trophy-img-wrap">
+              <img class="trophy-img" src="/trophies/bench_prismatic.webp" alt="Prismatic bench press trophy" width="640" height="640" loading="lazy" />
+            </div>
+            <div class="trophy-meta">
+              <p class="trophy-name">Bench Press</p>
+              <p class="trophy-tier">Prismatic · 2.00× BW</p>
+            </div>
+          </div>
+          <div class="trophy-card">
+            <div class="trophy-img-wrap">
+              <img class="trophy-img" src="/trophies/squat_prismatic.webp" alt="Prismatic back squat trophy" width="640" height="640" loading="lazy" />
+            </div>
+            <div class="trophy-meta">
+              <p class="trophy-name">Back Squat</p>
+              <p class="trophy-tier">Prismatic · 2.50× BW</p>
+            </div>
+          </div>
+          <div class="trophy-card">
+            <div class="trophy-img-wrap">
+              <img class="trophy-img" src="/trophies/deadlift_prismatic.webp" alt="Prismatic deadlift trophy" width="640" height="640" loading="lazy" />
+            </div>
+            <div class="trophy-meta">
+              <p class="trophy-name">Deadlift</p>
+              <p class="trophy-tier">Prismatic · 3.00× BW</p>
+            </div>
+          </div>
+          <div class="trophy-card">
+            <div class="trophy-img-wrap">
+              <img class="trophy-img" src="/trophies/pullup_prismatic.webp" alt="Prismatic pull-up trophy" width="640" height="640" loading="lazy" />
+            </div>
+            <div class="trophy-meta">
+              <p class="trophy-name">Pull-Up</p>
+              <p class="trophy-tier">Prismatic · 5,000 reps</p>
+            </div>
+          </div>
+          <div class="trophy-card">
+            <div class="trophy-img-wrap">
+              <img class="trophy-img" src="/trophies/pushup_prismatic.webp" alt="Prismatic push-up trophy" width="640" height="640" loading="lazy" />
+            </div>
+            <div class="trophy-meta">
+              <p class="trophy-name">Push-Up</p>
+              <p class="trophy-tier">Prismatic · 25,000 reps</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="trophy-foot reveal">
+          <span class="stat-pill"><strong>5</strong> lifts</span>
+          <span class="stat-pill"><strong>7</strong> tiers each</span>
+          <span class="stat-pill"><strong>35</strong> total</span>
+          <p class="copy">Each one rendered hand-tier. <strong>The Prismatic series</strong> is reserved for the genuinely elite — top 1% bodyweight ratios across the big lifts.</p>
+        </div>
       </div>
     </section>
 
@@ -967,7 +1142,7 @@
 
     <section class="manifesto">
       <div class="wrap reveal">
-        <span class="section-tag"><span class="num">05</span><span>Manifesto</span></span>
+        <span class="section-tag"><span class="num">06</span><span>Manifesto</span></span>
         <h2>Most apps just <span class="lime">log</span>.<br/>We <span class="lime">coach</span>.</h2>
         <p>Every set. Every rep. Every plateau. <strong>ForgeFit reads them and tells you what comes next.</strong></p>
         <p>No more guessing. No more half-baked spreadsheets. No more generic plans built for someone else's body.</p>
@@ -1035,7 +1210,7 @@
       ladderEl.innerHTML = TIERS.map((t, i) => `
         <div class="tier-row reveal" data-tier-index="${i}" style="transition-delay:${i * 60}ms">
           <span class="rank">0${t.rank}</span>
-          <span class="gem-dot" aria-hidden="true"></span>
+          <span class="gem-dot" aria-hidden="true"><img src="/ranks/${t.name.toLowerCase()}.webp" alt="" width="36" height="36" loading="lazy" /></span>
           <span class="name">${t.name}</span>
           <span class="flavor">${t.flavor}</span>
           <span class="ratio-tag">${t.bench === 0 ? '< ' + TIERS[1].bench.toFixed(2) + '×' : '≥ ' + t.bench.toFixed(2) + '×'} bench</span>
@@ -1070,14 +1245,24 @@
       setRatio('r-dead',  dead / bw,  dead > 0);
       setRatio('r-total', (bench + squat + dead) / bw, (bench + squat + dead) > 0);
 
+      const gemEl = $('tier-gem');
+      const gemImg = gemEl?.querySelector('img');
       if (bench > 0 && bw > 0) {
         const t = tierFor(bench / bw);
+        const slug = t.name.toLowerCase();
         $('tier-name').textContent = t.name.toUpperCase();
         $('tier-name').style.color = t.color;
         $('tier-name').style.textShadow = `0 0 24px ${t.color}40`;
         $('tier-flavor').textContent = t.flavor;
         $('tier-fill').style.inset = `0 ${100 - t.pct}% 0 0`;
         $('tier-fill').style.background = `linear-gradient(90deg, ${t.color}80, ${t.color})`;
+        if (gemImg && !gemImg.src.endsWith(`/ranks/${slug}.webp`)) {
+          gemImg.src = `/ranks/${slug}.webp`;
+        }
+        if (gemEl) {
+          gemEl.classList.add('is-active');
+          gemEl.style.setProperty('--current-gem', t.color + '80');
+        }
         document.querySelectorAll('.tier-row').forEach((row) => {
           const isActive = TIERS[+row.dataset.tierIndex].name === t.name;
           row.dataset.active = isActive.toString();
@@ -1090,6 +1275,10 @@
         $('tier-flavor').textContent = 'Enter your numbers to find your rank.';
         $('tier-fill').style.inset = '0 100% 0 0';
         $('tier-fill').style.background = '';
+        if (gemEl) {
+          gemEl.classList.remove('is-active');
+          gemEl.style.removeProperty('--current-gem');
+        }
         document.querySelectorAll('.tier-row').forEach((row) => {
           row.dataset.active = 'false';
           row.style.removeProperty('--tier-color');
