@@ -111,8 +111,20 @@ function brandedEmailHtml({ position, appUrl, logoUrl }) {
     <style>
       :root { color-scheme: light dark; supported-color-schemes: light dark; }
       body, table, td, div, p, h1, span { box-sizing: border-box; }
-      body { margin: 0 !important; padding: 0 !important; background-color: #080809 !important; }
-      .ff-canvas { background-color: #080809 !important; }
+      body {
+        margin: 0 !important; padding: 0 !important;
+        background-color: #080809 !important;
+        background-image: url('https://forgefitwaitlist.vercel.app/bg-dark.png') !important;
+        background-repeat: repeat !important;
+      }
+      /* The image bg is the "nuclear" defense — Gmail's color adapter can't
+         invert image pixels. Even if it lightens our solid bg, the tiled
+         #080809 PNG underneath keeps the canvas dark. */
+      .ff-canvas {
+        background-color: #080809 !important;
+        background-image: url('https://forgefitwaitlist.vercel.app/bg-dark.png') !important;
+        background-repeat: repeat !important;
+      }
       .ff-card { background-color: #0F0F14 !important; }
       .ff-lime { color: #C8F542 !important; }
       .ff-white { color: #FFFFFF !important; }
