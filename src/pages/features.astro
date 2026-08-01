@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import SignupForm from '../components/SignupForm.astro';
+
+const sections = [
+  {
+    id: 'logger',
+    kicker: 'The Logger',
+    title: 'Built for the gym floor, not a desk',
+    body: 'One thumb, sweaty hands, sixty seconds between sets. The logger is designed around the constraint that actually matters: how fast you can record a set and get back to training.',
+    points: [
+      ['Last session, inline', 'Every exercise shows your previous weight, reps and PR without opening anything. You always know the number to beat.'],
+      ['One-tap sets', 'Ghost values pre-fill from last time. Tap the tick and the set is logged at last session\'s numbers.'],
+      ['A rest timer that follows you', 'Fires on your lock screen and keeps running when the phone locks. Log the next set from the notification.'],
+      ['Plate math', 'Type a weight, see the per-side plate breakdown. No arithmetic mid-session.'],
+      ['Lifter-grade detail', 'RPE tags, warm-up, drop and failure sets, supersets, custom exercises, and per-exercise rest defaults.'],
+    ],
+  },
+  {
+    id: 'ember',
+    kicker: 'Ember, your AI coach',
+    title: 'A coach that has read your training log',
+    body: 'Most AI fitness features are a chat window with a system prompt. Ember reads your actual history (your PRs, your last session, your recovery this morning) before it answers.',
+    points: [
+      ['Ask anything', 'Answers built on your own numbers rather than generic templates.'],
+      ['Full workouts in seconds', 'Generated to your goal, your available equipment, and how recovered you are today.'],
+      ['Logs while you train', 'Tell it "log 100 for 8" mid-session and the set lands in the workout you\'re in.'],
+      ['Program critique', 'Paste any programme, or photograph one, and get a structured verdict on what works, what\'s broken, and what to change.'],
+      ['Voice mode', 'Talk to it hands-free when your hands are chalked.'],
+    ],
+  },
+  {
+    id: 'recovery',
+    kicker: 'Recovery-driven training',
+    title: 'Train hard when you\'re primed. Back off when you\'re not.',
+    body: 'Connect Apple Health and ForgeFit reads sleep, HRV and resting heart rate into a single readiness score, then scales your programming to match.',
+    points: [
+      ['Recovery, strain and heat', 'Three numbers that tell you how hard today should be, every morning.'],
+      ['No junk volume', 'Under-recovered days get lighter loads automatically rather than a session you grind through and regret.'],
+      ['Read-only, always', 'ForgeFit never writes to your Health record, never uses health data for advertising, and never shares it.'],
+    ],
+  },
+  {
+    id: 'progress',
+    kicker: 'Progress',
+    title: 'Proof that the work is working',
+    body: 'Strength charts per lift, volume by muscle group, body measurements and progress photos: the evidence that separates a productive block from a busy one.',
+    points: [
+      ['Strength over time', 'Estimated 1RM tracked per lift so progress is visible even when your rep ranges change.'],
+      ['Muscle balance', 'Weekly set counts per muscle group, so lagging areas are something you see rather than guess.'],
+      ['Progress photos', 'Stored privately, visible only to you, comparable side by side over time.'],
+    ],
+  },
+  {
+    id: 'ranks',
+    kicker: 'The Forge',
+    title: 'Ranks earned from real lifted volume',
+    body: 'Seven gem tiers from Copper to Prismatic, and thirty-five achievements. None of it is awarded for logging in: it is calculated from the weight you actually moved.',
+    points: [
+      ['Seven tiers', 'Copper, Silver, Gold, Diamond, Emerald, Ruby, Prismatic.'],
+      ['35 achievements', 'Milestones across the big five lifts and total training volume.'],
+      ['A trophy case that means something', 'Because there is no way to buy it.'],
+    ],
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'ForgeFit: AI Gym Coach',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'iOS',
+  description:
+    'Workout logger with an AI coach that reads your training history, Apple Health recovery scoring, strength progress tracking and gem-tier ranks.',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  featureList: sections.map((s) => s.title),
+};
+---
+
+<Base
+  title="Features: Workout Logger, AI Coach and Recovery Tracking | ForgeFit"
+  description="Everything in ForgeFit: a three-tap workout logger, Ember the AI coach that reads your training history, Apple Health recovery scoring, strength progress charts and gem-tier ranks."
+  schema={schema}
+>
+  <section class="head">
+    <div class="wrap">
+      <p class="kicker">Features</p>
+      <h1>A logger, a coach, and proof it's working.</h1>
+      <p class="lede">
+        Most fitness apps are a logbook with a subscription attached. ForgeFit logs faster than any of
+        them, and then does something with what it recorded.
+      </p>
+      <nav class="jump" aria-label="Jump to section">
+        {sections.map((s) => <a href={`#${s.id}`}>{s.kicker}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  {
+    sections.map((s, i) => (
+      <section class="feat" id={s.id}>
+        <div class="wrap">
+          <div class="rv">
+            <p class="kicker">{s.kicker}</p>
+            <h2>{s.title}</h2>
+            <p class="body-copy">{s.body}</p>
+            <ul class="points">
+              {s.points.map(([title, detail]) => (
+                <li>
+                  <b>{title}</b>
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="final">
+    <div class="wrap rv">
+      <h2>Get in early.</h2>
+      <p>ForgeFit launches soon on the App Store. Waitlist members get first access.</p>
+      <SignupForm hint="Free at launch. No spam." />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding: clamp(48px, 7vw, 88px) 0 clamp(24px, 3vw, 32px); }
+  h1 { font-weight: 900; font-size: clamp(34px, 5.4vw, 58px); text-wrap: balance; max-width: 18ch; }
+  .lede {
+    margin-top: 20px;
+    font-size: clamp(16px, 1.8vw, 19px);
+    color: var(--text-2);
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+  .jump { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .jump a {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-2);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .jump a:hover { border-color: var(--lime); color: var(--text); }
+
+  .feat { padding: clamp(48px, 7vw, 88px) 0; border-top: 1px solid var(--line); }
+  .feat h2 {
+    font-weight: 900;
+    font-size: clamp(26px, 3.8vw, 40px);
+    text-wrap: balance;
+    max-width: 20ch;
+  }
+  .body-copy {
+    margin-top: 16px;
+    font-size: 17px;
+    color: var(--text-2);
+    max-width: 60ch;
+    line-height: 1.65;
+  }
+  .points { margin-top: 28px; list-style: none; max-width: 780px; }
+  .points li {
+    display: grid;
+    grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+    gap: 24px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+  .points b { font-family: var(--display); font-weight: 800; font-size: 15.5px; }
+  .points span { color: var(--text-2); font-size: 15.5px; line-height: 1.6; }
+
+  .final {
+    padding: clamp(56px, 8vw, 96px) 0;
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+  .final h2 { font-weight: 900; font-size: clamp(30px, 4.6vw, 48px); text-transform: uppercase; }
+  .final p { margin: 16px auto 0; color: var(--text-2); max-width: 46ch; }
+  .final :global(.signup) { margin: 28px auto 0; }
+
+  @media (max-width: 700px) {
+    .points li { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>

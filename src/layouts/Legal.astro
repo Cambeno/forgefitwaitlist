@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  updated: string;
+  version?: string;
+  /** Table-of-contents entries: [anchor id, label]. */
+  toc?: [string, string][];
+}
+
+const { title, description, updated, version, toc = [] } = Astro.props;
+---
+
+<Base title={`${title}: ForgeFit`} description={description}>
+  <article class="legal">
+    <div class="wrap">
+      <h1>{title}</h1>
+      <p class="meta">
+        Last updated: {updated}{version && <> &middot; Version {version}</>}
+      </p>
+
+      {
+        toc.length > 0 && (
+          <nav class="toc" aria-label="Contents">
+            <h2>Contents</h2>
+            <ol>
+              {toc.map(([id, label]) => (
+                <li>
+                  <a href={`#${id}`}>{label}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+
+      <div class="doc">
+        <slot />
+      </div>
+
+      <footer class="doc-foot">
+        <p>
+          <a href="/privacy">Privacy Policy</a> &middot;
+          <a href="/terms">Terms of Service</a> &middot;
+          <a href="/community-guidelines">Community Guidelines</a>
+        </p>
+        <p class="entity">
+          ForgeFit is operated by Campbell Blair, sole trader, ABN 14 278 891 663, Australia.
+        </p>
+      </footer>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .legal { padding: clamp(40px, 6vw, 72px) 0 clamp(48px, 7vw, 80px); }
+  .legal .wrap { max-width: 760px; }
+
+  h1 { font-weight: 900; font-size: clamp(30px, 4.6vw, 46px); color: var(--lime); }
+  .meta {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--text-3);
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .toc {
+    margin: 28px 0 8px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 26px;
+  }
+  .toc h2 {
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 14px;
+  }
+  .toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
+  .toc li { margin-bottom: 8px; break-inside: avoid; }
+  .toc a { font-size: 14.5px; color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--lime); }
+
+  /* ── Document body ────────────────────────────────────── */
+  .doc :global(h2) {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(20px, 2.6vw, 25px);
+    margin: clamp(40px, 5vw, 52px) 0 14px;
+    scroll-margin-top: 84px;
+    color: var(--text);
+  }
+  .doc :global(h3) {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 17px;
+    margin: 28px 0 10px;
+    color: var(--text);
+  }
+  .doc :global(p) {
+    margin: 14px 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-2);
+  }
+  .doc :global(strong) { color: var(--text); font-weight: 600; }
+  .doc :global(em) { color: var(--text-2); }
+  .doc :global(a) { color: var(--lime); text-underline-offset: 3px; }
+  .doc :global(ul),
+  .doc :global(ol) {
+    margin: 14px 0 14px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .doc :global(li) { font-size: 16px; line-height: 1.65; color: var(--text-2); }
+  .doc :global(li::marker) { color: var(--lime); }
+
+  /* Full hairline border plus a lime-tinted ground. The tint is the signal;
+     no side stripe. */
+  .doc :global(.callout) {
+    background: rgba(181, 242, 61, 0.05);
+    border: 1px solid rgba(181, 242, 61, 0.22);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .doc :global(.callout p) { margin: 0; color: var(--text); }
+  .doc :global(.callout p + p) { margin-top: 10px; }
+
+  .doc :global(.table-scroll) {
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .doc :global(table) { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 14.5px; }
+  .doc :global(thead) { background: var(--bg-2); }
+  .doc :global(th) {
+    text-align: left;
+    padding: 11px 15px;
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .doc :global(td) { padding: 11px 15px; border-top: 1px solid var(--line); color: var(--text-2); }
+  .doc :global(td:first-child) { color: var(--text); font-weight: 600; }
+
+  .doc-foot {
+    margin-top: clamp(48px, 6vw, 64px);
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .doc-foot p { font-size: 14px; color: var(--text-3); }
+  .doc-foot a { color: var(--text-2); text-decoration: none; }
+  .doc-foot a:hover { color: var(--lime); }
+  .entity { margin-top: 10px; font-size: 13px; opacity: 0.8; }
+
+  @media (max-width: 640px) {
+    .toc ol { columns: 1; }
+  }
+</style>

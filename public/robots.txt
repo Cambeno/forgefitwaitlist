@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Public critique share links are unguessable by design and are not meant to
+# be indexed — they can contain a user's own training programme.
+Disallow: /c/
+Disallow: /api/
+
+Sitemap: https://forgefit.fitness/sitemap-index.xml

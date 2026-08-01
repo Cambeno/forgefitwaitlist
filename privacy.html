@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#080809" />
     <title>Privacy Policy — ForgeFit</title>
-    <meta name="description" content="ForgeFit privacy policy. What we collect, how we use it, and how to delete your account." />
+    <meta name="description" content="ForgeFit privacy policy. What we collect, how we use it, how Apple Health and analytics work, your rights under Australian law, and how to update, export, or delete your data." />
     <style>
       :root { color-scheme: dark; }
       * { box-sizing: border-box; }
@@ -33,6 +33,11 @@
         margin: 40px 0 12px;
         color: #fff;
       }
+      h3 {
+        font-size: 17px;
+        margin: 28px 0 8px;
+        color: #fff;
+      }
       p, li { color: #c5c5cb; }
       a { color: #d4ff3a; }
       .meta { color: #76767e; font-size: 14px; margin-bottom: 32px; }
@@ -41,78 +46,170 @@
       .footer { color: #76767e; font-size: 13px; }
       .footer a { color: #c5c5cb; text-decoration: none; }
       .footer a:hover { color: #d4ff3a; }
+      table { border-collapse: collapse; margin: 16px 0; width: 100%; }
+      th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #222226; font-size: 14px; }
+      th { color: #76767e; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+      td { color: #c5c5cb; }
+      .callout { background: #101014; border: 1px solid #222226; border-radius: 12px; padding: 16px 20px; margin: 20px 0; }
     </style>
   </head>
   <body>
     <main>
       <h1>Privacy Policy</h1>
-      <p class="meta">Last updated: 25 April 2026</p>
+      <p class="meta">Last updated: 19 July 2026 &middot; Version 3.0</p>
 
       <p>
-        ForgeFit ("we", "us", "the app") is an iOS fitness tracking application developed by Campbell Blair.
-        This policy explains what personal data we collect, why, who we share it with, and how to delete it.
+        ForgeFit ("we", "us", "the app") is a fitness tracking application developed and operated by Campbell Blair (ABN-registered sole trader, Australia).
+        This policy explains what personal data we collect, why we collect it, who we share it with, how long we keep it, and how you can access, correct, export, or delete it. We handle your data under the <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles (APPs).
+      </p>
+      <p>
+        This policy covers the ForgeFit iOS app, the waitlist and website at <a href="https://forgefit.fitness">forgefit.fitness</a>, and our backend services. We comply with the <em>Spam Act 2003</em> (Cth) for all electronic messages.
       </p>
 
+      <div class="callout">
+        <strong>The short version:</strong> we collect what we need to run your training log and AI coach, nothing more. We never sell your data, never use it for advertising, and never use your Apple Health data for anything but showing you your own recovery. You can turn off analytics, export everything, and delete your account and all its data from inside the app at any time.
+      </div>
+
       <h2>1. What we collect</h2>
+
+      <h3>Account &amp; profile</h3>
       <ul>
-        <li><strong>Account info:</strong> email address, display name, and password (hashed). If you sign in with Apple or Google, we receive only the basic identity tokens those providers return.</li>
-        <li><strong>Fitness data you log:</strong> workouts, exercises, sets, reps, weights, body weight, and any progress photos or notes you add.</li>
-        <li><strong>Subscription info:</strong> Stripe customer ID, subscription tier, billing status. We never see or store your card details — Stripe handles those.</li>
-        <li><strong>Diagnostics:</strong> crash reports and anonymized usage events (via Sentry) to help us fix bugs.</li>
-        <li><strong>Device info:</strong> iOS version and app version, only as part of crash reports.</li>
+        <li><strong>Account:</strong> your email address, display name, and a password (stored only as a secure hash — we never see the plain text). If you use Sign in with Apple or Google, we receive only the basic identity information those providers return (name and email; with Apple you may choose to hide your email). If you use "guest mode", we create an anonymous account tied to your device with no personal details until you choose to register.</li>
+        <li><strong>Fitness profile you enter:</strong> gender, date of birth, height, body weight, training goal, experience level, training days per week, session length, and any injuries you tell us about — used to tailor plans and AI suggestions.</li>
       </ul>
 
-      <h2>2. What we do with it</h2>
+      <h3>Training data you log</h3>
       <ul>
-        <li>Authenticate you when you sign in.</li>
-        <li>Store your workouts so you can see your progress across devices.</li>
-        <li>Generate AI workout plans and coaching responses (your prompts are sent to Anthropic's Claude API; see below).</li>
-        <li>Process subscription payments (via Stripe).</li>
-        <li>Send transactional email — sign-up confirmation, password reset, billing notices (via Resend).</li>
+        <li>Workouts, exercises, sets, reps, weights, rest times, personal records, training plans, goals, body measurements, and any notes you add.</li>
+        <li><strong>Progress photos and program screenshots</strong> you choose to upload. These are stored privately in our storage and are visible only to you; they are never public and never used for any purpose other than showing them back to you.</li>
+      </ul>
+
+      <h3>Apple Health data (iOS, optional)</h3>
+      <ul>
+        <li>If — and only if — you grant permission, ForgeFit reads a limited set of Apple Health metrics: steps, heart rate, heart-rate variability (HRV), resting heart rate, sleep, and active energy. See Section 2 for exactly how this is handled.</li>
+      </ul>
+
+      <h3>AI interactions</h3>
+      <ul>
+        <li>When you use Ember (our AI coach), generate a workout or plan, or submit a program for critique, the text and any images you provide are sent to our AI providers to produce a response. See Section 3.</li>
+      </ul>
+
+      <h3>Usage analytics &amp; diagnostics</h3>
+      <ul>
+        <li><strong>Product analytics (PostHog):</strong> anonymous, aggregated events about how features are used (e.g. "a workout was completed"), tied to a randomly generated, non-personal identifier — not your name, email, or advertising ID. You can turn this off (Section 4).</li>
+        <li><strong>Error monitoring (Sentry):</strong> when a request to our servers hits an error, technical details of that request are logged so we can diagnose and fix it. This is server-side monitoring, not device tracking.</li>
+      </ul>
+
+      <h3>Subscription &amp; billing (when applicable)</h3>
+      <ul>
+        <li>ForgeFit V1 is free. If we introduce paid subscriptions, iOS purchases are handled by Apple's In-App Purchase and web purchases by Stripe. We never see or store your card details — Apple and Stripe handle those. We would receive only your subscription status.</li>
+      </ul>
+
+      <h3>Waitlist</h3>
+      <ul>
+        <li>If you join the waitlist, we collect your email address, IP address (for rate limiting), and signup/confirmation timestamps with the consent copy version, to prove double opt-in under the Spam Act. The waitlist page uses no cookies, analytics, or tracking pixels.</li>
+      </ul>
+
+      <h2>2. Apple Health data</h2>
+      <p>ForgeFit uses Apple Health to show you your recovery and training readiness. We take this seriously and follow Apple's HealthKit rules:</p>
+      <ul>
+        <li>We only <strong>read</strong> health data (steps, heart rate, HRV, resting heart rate, sleep, active energy) — we never write to your Health record.</li>
+        <li>Health data is used <strong>solely</strong> to display your recovery, strain, and readiness inside the app. We <strong>never</strong> use it for advertising or marketing, and we <strong>never</strong> sell it or share it with any third party or data broker.</li>
+        <li>Health data is not stored in iCloud by us, and is not used for any purpose you didn't grant permission for.</li>
+        <li>You can revoke ForgeFit's access at any time in iOS <em>Settings &rarr; Privacy &amp; Security &rarr; Health</em>. Revoking access does not delete the workouts you've already logged in ForgeFit.</li>
+      </ul>
+
+      <h2>3. AI features</h2>
+      <p>
+        ForgeFit uses third-party AI models to generate coaching responses, workout plans, progression suggestions, and program critiques, and to create share images:
+      </p>
+      <ul>
+        <li><strong>Anthropic</strong> (Claude) — text coaching, plan generation, and critique. Processed under <a href="https://www.anthropic.com/legal/privacy">Anthropic's privacy policy</a>.</li>
+        <li><strong>Google</strong> (Gemini) — image generation for features such as share cards. Processed under <a href="https://policies.google.com/privacy">Google's privacy policy</a>.</li>
+      </ul>
+      <p>
+        To generate a response, the relevant inputs — your message to Ember, a program you paste in, an image you submit, and relevant profile/training context — are sent to these providers. They process the request to return a result and do not use your inputs to train their public models beyond what their own policies allow. AI output is not medical or professional advice; see our <a href="/terms">Terms of Service</a>.
+      </p>
+
+      <h2>4. Analytics &amp; your choice to opt out</h2>
+      <p>
+        We use <strong>PostHog</strong> for first-party product analytics to understand which features are used and where the app can improve. This data is anonymous and tied to a randomly generated identifier stored on your device — not your name, email, IDFA, or any cross-app/advertising identifier. We do <strong>not</strong> track you across other apps or websites, which is why ForgeFit does not show the App Tracking Transparency prompt.
+      </p>
+      <p>
+        You can turn analytics off completely at any time: <em>Settings &rarr; Privacy &amp; Social &rarr; "Share anonymous usage data"</em>. When it's off, no product-analytics events are sent.
+      </p>
+
+      <h2>5. How we use your data</h2>
+      <ul>
+        <li>Authenticate you and keep you signed in.</li>
+        <li>Store your workouts, plans, goals, measurements, and photos so you can see your progress across sessions and devices.</li>
+        <li>Show your recovery and readiness from Apple Health (if connected).</li>
+        <li>Generate AI workout plans, coaching, and critiques.</li>
+        <li>Send you essential transactional emails (verification, password reset, waitlist confirmation).</li>
         <li>Diagnose crashes and improve the app.</li>
+        <li>Process subscription payments, if and when you subscribe.</li>
       </ul>
-      <p>We do not sell your data. We do not use it for advertising. We do not share it with anyone except the service providers below, who only see what they need to do their job.</p>
+      <p>We do not sell your data. We do not use it for advertising. We do not share it with anyone except the service providers listed below, each only to the extent needed to run the service.</p>
 
-      <h2>3. Service providers we use</h2>
+      <h2>6. Service providers</h2>
       <ul>
-        <li><strong>Supabase</strong> — authentication and database hosting.</li>
-        <li><strong>Vercel</strong> — server hosting.</li>
-        <li><strong>Stripe</strong> — subscription billing.</li>
-        <li><strong>Anthropic (Claude)</strong> — AI workout generation and coaching. Your prompts are processed under <a href="https://www.anthropic.com/legal/privacy">Anthropic's privacy policy</a>.</li>
-        <li><strong>Sentry</strong> — error and crash diagnostics.</li>
-        <li><strong>Resend</strong> — transactional email delivery.</li>
-        <li><strong>Apple</strong> — Sign In with Apple, App Store subscription receipts.</li>
-        <li><strong>Google</strong> — Sign In with Google.</li>
+        <li><strong>Supabase</strong> (US) — authentication, database, and file storage (including your progress photos).</li>
+        <li><strong>Vercel</strong> (US) — server and website hosting.</li>
+        <li><strong>Anthropic</strong> (US) — AI coaching, plan generation, and critique.</li>
+        <li><strong>Google</strong> (US) — Gemini image generation; Sign in with Google.</li>
+        <li><strong>PostHog</strong> (US/EU) — anonymous product analytics (opt-out available).</li>
+        <li><strong>Sentry</strong> (US) — crash and error diagnostics.</li>
+        <li><strong>Resend</strong> (US) — transactional email delivery.</li>
+        <li><strong>Stripe</strong> (US) — subscription billing on the web (when applicable).</li>
+        <li><strong>Apple</strong> — Sign in with Apple, Apple Health (HealthKit), and App Store In-App Purchase (when applicable).</li>
+      </ul>
+      <p>Each provider only receives the minimum data needed to perform its function, and none is permitted to use your data for its own marketing.</p>
+
+      <h2>7. Data retention</h2>
+      <ul>
+        <li><strong>App data:</strong> retained for as long as your account exists, and permanently deleted within 30 days of you deleting your account.</li>
+        <li><strong>Progress photos:</strong> deleted when you delete the photo, or with your account.</li>
+        <li><strong>Analytics:</strong> anonymous and retained in aggregate; not linked to your identity.</li>
+        <li><strong>Waitlist data:</strong> retained until you unsubscribe or we complete launch; consent audit records kept for 3 years after the last email, per the Spam Act.</li>
+        <li><strong>Billing records:</strong> retained by Apple/Stripe for tax and audit purposes per their policies.</li>
       </ul>
 
-      <h2>4. Data retention</h2>
-      <p>We keep your data for as long as your account exists. When you delete your account, we delete your profile, workouts, and account data within 30 days, except where we are legally required to keep records (e.g. payment records, which Stripe retains for tax and audit purposes).</p>
+      <h2>8. Your rights and controls</h2>
+      <p>You are in control of your data. From inside the app you can:</p>
+      <ul>
+        <li><strong>Access &amp; export</strong> — export a copy of your data: <em>Settings &rarr; Data &rarr; Export All Data</em> (APP 12).</li>
+        <li><strong>Update / correct</strong> — change your name, profile, and fitness details: <em>Settings &rarr; Profile</em> (APP 13).</li>
+        <li><strong>Opt out of analytics</strong> — <em>Settings &rarr; Privacy &amp; Social &rarr; Share anonymous usage data</em>.</li>
+        <li><strong>Delete</strong> — permanently delete your account and all associated data: <em>Settings &rarr; Delete Account</em>. This is immediate and irreversible. For the waitlist, use the unsubscribe link in any email.</li>
+      </ul>
+      <p>
+        If you believe we've breached the APPs, you may complain to us first, then to the <a href="https://www.oaic.gov.au/privacy/privacy-complaints">Office of the Australian Information Commissioner (OAIC)</a>. If you're in the EU/UK (GDPR) or California (CCPA/CPRA), you have additional rights — email us to exercise them.
+      </p>
 
-      <h2>5. How to delete your account</h2>
-      <p>In the app: <em>Settings → Account → Delete account</em>. Or email us at <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a> from the address on your account and we will delete it within 30 days.</p>
+      <h2>9. Overseas disclosure</h2>
+      <p>Your data may be processed in the United States (and, for PostHog, optionally the EU) by the providers listed above. We take reasonable steps to ensure they handle your data consistently with the APPs (APP 8), and each is bound by its own privacy policy and data-processing terms.</p>
 
-      <h2>6. Your rights</h2>
-      <p>Depending on where you live (EU/UK GDPR, California CCPA, Australia Privacy Act), you have the right to access, correct, export, or delete your personal data. Email <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a> to make a request.</p>
+      <h2>10. Children</h2>
+      <p>ForgeFit is intended for users aged 16 and over. We do not knowingly collect data from anyone under 16. If you believe a child under 16 has created an account, email us and we will delete it.</p>
 
-      <h2>7. Children</h2>
-      <p>ForgeFit is rated for users 16 and over. We do not knowingly collect data from anyone under 16. If you believe a child under 16 has signed up, email us and we will delete the account.</p>
+      <h2>11. Security</h2>
+      <p>Passwords are hashed, data in transit is encrypted via TLS, and card details never touch our servers. Access to your data is authenticated and scoped to your account. While no system is perfectly secure, we take reasonable steps to protect your data (APP 11). If you believe your account has been compromised, change your password and email us immediately.</p>
 
-      <h2>8. Security</h2>
-      <p>Passwords are hashed by Supabase. Data in transit is encrypted via TLS. Card details never touch our servers. No system is perfectly secure — if you believe your account has been compromised, change your password and email us immediately.</p>
+      <h2>12. Changes to this policy</h2>
+      <p>If we change this policy materially, we will notify you in-app or by email and update the "Last updated" date above. Previous versions are available on request.</p>
 
-      <h2>9. Changes to this policy</h2>
-      <p>If we change this policy materially, we will notify you in-app and update the "Last updated" date above.</p>
-
-      <h2>10. Contact</h2>
+      <h2>13. Contact</h2>
       <p>
         Campbell Blair<br />
-        Email: <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a>
+        ForgeFit<br />
+        Privacy: <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a><br />
+        General: <a href="mailto:hello@forgefit.fitness">hello@forgefit.fitness</a>
       </p>
 
       <hr />
 
       <p class="footer">
-        <a href="/">← Back to ForgeFit</a> · <a href="/terms.html">Terms of Service</a>
+        <a href="/">← Back to ForgeFit</a> · <a href="/terms">Terms of Service</a>
       </p>
     </main>
   </body>

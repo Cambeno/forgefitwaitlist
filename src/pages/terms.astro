@@ -1,0 +1,352 @@
+---
+import Legal from '../layouts/Legal.astro';
+
+const toc: [string, string][] = [
+  ['service', '1. The service'],
+  ['account', '2. Your account'],
+  ['subscriptions', '3. Subscriptions and payments'],
+  ['ai', '4. AI-generated content'],
+  ['health-data', '5. Apple Health'],
+  ['ugc', '6. User content and community'],
+  ['acceptable', '7. Acceptable use'],
+  ['ip', '8. Intellectual property'],
+  ['health', '9. Health and safety disclaimer'],
+  ['termination', '10. Termination'],
+  ['disclaimer', '11. Disclaimer'],
+  ['liability', '12. Limitation of liability'],
+  ['apple', '13. Apple App Store terms'],
+  ['changes', '14. Changes to these Terms'],
+  ['law', '15. Governing law'],
+  ['contact', '16. Contact'],
+];
+---
+
+<Legal
+  title="Terms of Service"
+  description="ForgeFit terms of service: the rules for using the app, subscriptions, AI-generated content, Apple Health, user content and community standards, and the limits of our liability."
+  updated="1 August 2026"
+  version="3.0"
+  toc={toc}
+>
+  <p>
+    These terms ("Terms") govern your use of ForgeFit ("the app", "we", "us"), operated by
+    <strong>Campbell Blair</strong>, sole trader, <strong>ABN 14 278 891 663</strong>, Australia. By
+    creating an account or using the app you agree to these Terms. If you do not agree, do not use the
+    app.
+  </p>
+
+  <h2 id="service">1. The service</h2>
+  <p>
+    ForgeFit is a workout logger and AI-assisted training planner. Features include exercise logging,
+    training plans and templates, progress tracking, body measurements and progress photos,
+    achievements and ranks, Apple Health–based recovery insights, AI-generated workout suggestions and
+    coaching, programme critique, and optional social features.
+  </p>
+  <p>
+    We may add, change or remove features at any time. Where a change materially reduces functionality
+    you rely on, we will give reasonable notice.
+  </p>
+
+  <h2 id="account">2. Your account</h2>
+  <ul>
+    <li>You must be <strong>16 or older</strong> to use ForgeFit.</li>
+    <li>You are responsible for keeping your password secure and for activity under your account.</li>
+    <li>The information you provide must be accurate. You can update it in <em>Settings → Profile</em>.</li>
+    <li>One account per person. Do not share login credentials.</li>
+    <li>
+      You may use guest mode without registering. Guest accounts are tied to a single device, if you
+      lose or reset the device without registering, that data cannot be recovered.
+    </li>
+  </ul>
+
+  <h2 id="subscriptions">3. Subscriptions and payments</h2>
+  <ul>
+    <li>
+      <strong>ForgeFit V1 is free.</strong> All current features are available at no cost and no
+      subscription is currently sold.
+    </li>
+    <li>
+      Some features may require a paid subscription in future. If subscriptions launch, iOS purchases
+      are billed through <strong>Apple's In-App Purchase</strong> and managed by Apple; any web
+      purchases are billed through <strong>Stripe</strong>. We never see or store your card details.
+    </li>
+    <li>
+      Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current
+      period. iOS subscriptions are managed and cancelled in your Apple ID settings; we cannot cancel
+      or refund an App Store subscription on your behalf.
+    </li>
+    <li>
+      Cancelling stops the next renewal: it does not refund the period you are currently in. Refunds
+      for App Store purchases are handled by Apple under Apple's policies.
+    </li>
+    <li>We will give at least 30 days' notice of any price change. Price changes never apply retroactively to a period you have already paid for.</li>
+    <li>
+      Prices are shown in your local currency where Apple supports it. Local taxes (GST, VAT, sales
+      tax) may apply and are handled by the payment processor.
+    </li>
+  </ul>
+
+  <h2 id="ai">4. AI-generated content</h2>
+  <p>
+    ForgeFit uses third-party AI models: currently Anthropic's Claude for coaching, plans and
+    critique, and Google's Gemini for image generation, to produce workout plans, coaching responses,
+    progression suggestions and share images.
+  </p>
+  <p>
+    AI output is generated automatically and <strong>may contain mistakes.</strong>
+    <strong>It is not medical, fitness, or professional advice.</strong> You are responsible for
+    deciding whether any AI suggestion is safe and appropriate for you. If you have an injury or
+    medical condition, or are unsure, consult a qualified coach or healthcare professional before
+    acting on AI output.
+  </p>
+  <p>
+    You retain ownership of the content you submit to AI features. You are responsible for having the
+    right to submit it, for example, do not upload a coaching programme you are contractually
+    forbidden from sharing.
+  </p>
+
+  <h2 id="health-data">5. Apple Health</h2>
+  <p>
+    If you connect Apple Health, ForgeFit <strong>reads</strong> a limited set of metrics (heart rate,
+    HRV, resting heart rate, sleep, steps, active energy) only to show you your recovery and readiness
+    and to scale AI suggestions. We never write to your Health record, never use Health data for
+    advertising, and never sell or share it. You can revoke access at any time in iOS Settings. See the
+    <a href="/privacy">Privacy Policy</a> for full detail.
+  </p>
+
+  <h2 id="ugc">6. User content and community</h2>
+  <p>
+    ForgeFit includes optional social features that let you choose a username, connect with friends,
+    share workouts, and post comments. If you use them, this section applies.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>There is zero tolerance for objectionable content or abusive behaviour on ForgeFit.</strong>
+      Content that breaches our <a href="/community-guidelines">Community Guidelines</a> is removed and
+      the accounts responsible are suspended or terminated.
+    </p>
+  </div>
+
+  <h3>Your responsibilities</h3>
+  <ul>
+    <li>
+      You are solely responsible for the content you post, and you must have the right to post it.
+    </li>
+    <li>
+      You must not post content that is unlawful, harassing, abusive, threatening, hateful,
+      defamatory, sexually explicit, violent, or that promotes self-harm, disordered eating, or unsafe
+      use of drugs or performance-enhancing substances.
+    </li>
+    <li>
+      You must not impersonate anyone, post another person's private information, or post spam or
+      commercial solicitation.
+    </li>
+    <li>
+      The full standard is set out in our <a href="/community-guidelines">Community Guidelines</a>,
+      which form part of these Terms.
+    </li>
+  </ul>
+
+  <h3>Reporting, blocking and enforcement</h3>
+  <ul>
+    <li>
+      Every post, comment and profile can be <strong>reported</strong> from inside the app, or by
+      emailing <a href="mailto:safety@forgefit.fitness">safety@forgefit.fitness</a>.
+    </li>
+    <li>
+      You can <strong>block</strong> any user, which prevents them contacting you, seeing your
+      activity, or interacting with your content.
+    </li>
+    <li>
+      We review reports of objectionable content and act on them
+      <strong>within 24 hours</strong>: removing the content and, where warranted, suspending or
+      permanently ejecting the user responsible.
+    </li>
+    <li>
+      We may remove content or suspend accounts without prior notice where content is clearly unlawful
+      or presents a risk of harm.
+    </li>
+  </ul>
+
+  <h3>Our licence to your content</h3>
+  <p>
+    You keep ownership of everything you post. By posting content to a social feature, you grant us a
+    non-exclusive, worldwide, royalty-free licence to host, store, reproduce and display that content
+    <strong>solely to operate the service</strong>: showing it to the people you shared it with,
+    syncing it across your devices, and moderating it. This licence ends when you delete the content or
+    your account, except for copies we must retain to resolve an open abuse report or meet a legal
+    obligation.
+  </p>
+  <p>
+    We claim no ownership of your workouts, photos or notes, and we do not use your content for
+    marketing without asking you first.
+  </p>
+
+  <h2 id="acceptable">7. Acceptable use</h2>
+  <p>You agree not to:</p>
+  <ul>
+    <li>Use the app for anything illegal.</li>
+    <li>Reverse-engineer, decompile, scrape, or attempt to extract data from the app or our servers, except where the law expressly permits it.</li>
+    <li>Use automated systems to create accounts, generate AI requests at scale, or otherwise place unreasonable load on the service.</li>
+    <li>Use prompt injection or similar techniques to manipulate the AI into producing harmful, deceptive or off-policy output.</li>
+    <li>Circumvent rate limits, entitlement checks, or any access control.</li>
+    <li>Interfere with the app's operation, introduce malware, or attempt to overwhelm our servers.</li>
+    <li>Resell, sublicense or commercialise access to ForgeFit without our written permission.</li>
+    <li>Harass, stalk or abuse other users, or evade a block or ban.</li>
+  </ul>
+
+  <h2 id="ip">8. Intellectual property</h2>
+  <p>
+    We own the ForgeFit name, logo, app code, exercise library content, rank and trophy artwork, and
+    all other content we produce. Subject to these Terms, we grant you a personal, non-transferable,
+    non-exclusive licence to use the app.
+  </p>
+  <p>
+    You own the workout data, photos and notes you log. By using the app you grant us a limited licence
+    to store and process your content as needed to operate the service: syncing across devices,
+    generating AI suggestions, and calculating your statistics. We claim no other rights to your data.
+  </p>
+  <p>
+    If you believe content on ForgeFit infringes your copyright, email
+    <a href="mailto:safety@forgefit.fitness">safety@forgefit.fitness</a> with a description of the
+    work, where the infringing content appears, and your contact details. We remove infringing content
+    promptly and terminate repeat infringers.
+  </p>
+
+  <h2 id="health">9. Health and safety disclaimer</h2>
+  <div class="callout">
+    <p>
+      <strong>Strength training carries inherent risk of injury.</strong> ForgeFit is a tracking and
+      planning tool. It is not a substitute for a coach, doctor or physiotherapist, and it does not
+      supervise your technique.
+    </p>
+    <p>
+      Train within your ability. Stop if something hurts. If you are pregnant, recovering from injury,
+      taking medication, or have any medical condition, including cardiovascular conditions or eating
+      disorders: consult a qualified professional before starting or changing a training programme.
+      Recovery scores derived from Apple Health are training guidance, not a medical assessment, and
+      must never be used to diagnose or manage a health condition.
+    </p>
+  </div>
+
+  <h2 id="termination">10. Termination</h2>
+  <ul>
+    <li>
+      You can delete your account at any time from <em>Settings → Delete Account</em>. This permanently
+      deletes your account and all associated data.
+    </li>
+    <li>
+      We may suspend or terminate accounts that breach these Terms or the Community Guidelines, or
+      where required by law. Where reasonable and safe to do so, we will give notice and an opportunity
+      to fix the problem, but breaches involving abuse, illegal content or risk of harm may result in
+      immediate termination.
+    </li>
+    <li>
+      Sections 4 (AI), 6 (licence to content), 8 (IP), 9 (Health), 11 (Disclaimer), 12 (Liability) and
+      15 (Governing law) survive termination.
+    </li>
+  </ul>
+
+  <h2 id="disclaimer">11. Disclaimer</h2>
+  <p>
+    ForgeFit is provided <strong>"as is"</strong> and <strong>"as available"</strong>. To the maximum
+    extent the law allows, we disclaim all warranties, express or implied, including merchantability,
+    fitness for a particular purpose, accuracy and non-infringement. We do not promise the app will be
+    uninterrupted or error-free, that data will never be lost, or that AI output will be correct.
+  </p>
+  <div class="callout">
+    <p>
+      <strong>Australian Consumer Law.</strong> Nothing in these Terms excludes, restricts or modifies
+      any guarantee, right or remedy you have under the Australian Consumer Law or any other law that
+      cannot lawfully be excluded. Our goods and services come with guarantees that cannot be excluded
+      under the Australian Consumer Law. Where we are permitted to limit our liability for breach of a
+      consumer guarantee, our liability is limited to resupplying the service or paying the cost of
+      resupply.
+    </p>
+  </div>
+
+  <h2 id="liability">12. Limitation of liability</h2>
+  <p>
+    To the maximum extent the law allows, our total aggregate liability to you for any claim relating
+    to ForgeFit is limited to the greater of the amount you paid us in the 12 months before the claim
+    arose, or <strong>AUD $100</strong>.
+  </p>
+  <p>
+    We are not liable for indirect, incidental, special or consequential damages, or for loss of
+    profit, data or goodwill. Some jurisdictions do not allow these limits, in those places our
+    liability is limited to the maximum extent the law allows, and the consumer guarantees described in
+    Section 11 continue to apply.
+  </p>
+
+  <h2 id="apple">13. Apple App Store terms</h2>
+  <p>
+    Where you obtained ForgeFit through the Apple App Store, the following apply and prevail over any
+    inconsistent term:
+  </p>
+  <ul>
+    <li>
+      <strong>Apple is not a party.</strong> These Terms are between you and Campbell Blair only, not
+      with Apple. Apple is not responsible for ForgeFit or its content.
+    </li>
+    <li>
+      <strong>Scope of licence.</strong> Your licence to use ForgeFit is limited to a non-transferable
+      licence to use it on Apple-branded products you own or control, as permitted by the App Store
+      Terms of Service.
+    </li>
+    <li>
+      <strong>Maintenance and support.</strong> We are solely responsible for providing support for
+      ForgeFit. Apple has no obligation to furnish any maintenance or support services.
+    </li>
+    <li>
+      <strong>Warranty.</strong> We are solely responsible for any product warranties, whether express
+      or implied by law, to the extent not effectively disclaimed. If ForgeFit fails to conform to any
+      applicable warranty, you may notify Apple and Apple will refund the purchase price (if any);
+      Apple has no other warranty obligation whatsoever.
+    </li>
+    <li>
+      <strong>Product claims.</strong> We, not Apple, are responsible for addressing any claims
+      relating to ForgeFit, including product liability claims, any claim that it fails to conform to a
+      legal or regulatory requirement, and claims under consumer protection or privacy law.
+    </li>
+    <li>
+      <strong>Intellectual property claims.</strong> We, not Apple, are responsible for the
+      investigation, defence, settlement and discharge of any third-party claim that ForgeFit infringes
+      that third party's intellectual property rights.
+    </li>
+    <li>
+      <strong>Legal compliance.</strong> You represent that you are not located in a country subject to
+      a US Government embargo or designated as a "terrorist supporting" country, and that you are not
+      listed on any US Government list of prohibited or restricted parties.
+    </li>
+    <li>
+      <strong>Third-party beneficiary.</strong> Apple and its subsidiaries are third-party
+      beneficiaries of these Terms, and upon your acceptance Apple has the right (and is deemed to have
+      accepted the right) to enforce these Terms against you as a third-party beneficiary.
+    </li>
+  </ul>
+
+  <h2 id="changes">14. Changes to these Terms</h2>
+  <p>
+    We may update these Terms from time to time. If we make material changes we will notify you in the
+    app or by email and update the "Last updated" date above. Continued use after the changes take
+    effect means you accept the updated Terms. If you do not accept them, delete your account.
+  </p>
+
+  <h2 id="law">15. Governing law</h2>
+  <p>
+    These Terms are governed by the laws of <strong>Victoria, Australia</strong>. Disputes will be
+    handled by the courts of Victoria, Australia, unless mandatory consumer law in your country of
+    residence gives you the right to bring proceedings in a different forum, in which case that right
+    is preserved.
+  </p>
+
+  <h2 id="contact">16. Contact</h2>
+  <p>
+    Campbell Blair, trading as ForgeFit<br />
+    ABN 14 278 891 663 &middot; Australia<br />
+    General: <a href="mailto:hello@forgefit.fitness">hello@forgefit.fitness</a><br />
+    Safety and abuse: <a href="mailto:safety@forgefit.fitness">safety@forgefit.fitness</a><br />
+    Privacy: <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a>
+  </p>
+</Legal>

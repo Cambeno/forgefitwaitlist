@@ -1,0 +1,506 @@
+---
+import Legal from '../layouts/Legal.astro';
+
+const toc: [string, string][] = [
+  ['collect', '1. What we collect'],
+  ['health', '2. Apple Health data'],
+  ['voice', '3. Voice and microphone'],
+  ['ai', '4. AI features'],
+  ['social', '5. Social features and sharing'],
+  ['analytics', '6. Analytics and your opt-out'],
+  ['notifications', '7. Push notifications'],
+  ['use', '8. How we use your data'],
+  ['legal-basis', '9. Legal bases (EU/UK users)'],
+  ['providers', '10. Service providers'],
+  ['retention', '11. Data retention'],
+  ['rights', '12. Your rights and controls'],
+  ['overseas', '13. Overseas disclosure'],
+  ['children', '14. Children'],
+  ['security', '15. Security and data breaches'],
+  ['website', '16. This website'],
+  ['changes', '17. Changes'],
+  ['contact', '18. Contact'],
+];
+---
+
+<Legal
+  title="Privacy Policy"
+  description="ForgeFit privacy policy: what we collect, why, who we share it with, how Apple Health, voice and AI features work, your rights under Australian and EU law, and how to export or delete everything."
+  updated="1 August 2026"
+  version="4.0"
+  toc={toc}
+>
+  <p>
+    ForgeFit ("we", "us", "the app") is a fitness tracking application operated by
+    <strong>Campbell Blair</strong>, a sole trader registered in Australia,
+    <strong>ABN 14 278 891 663</strong>. This policy explains what personal information we collect,
+    why, who we share it with, how long we keep it, and how you can access, correct, export or delete
+    it.
+  </p>
+  <p>
+    We handle personal information under the <em>Privacy Act 1988</em> (Cth) and the Australian
+    Privacy Principles (APPs), and we comply with the <em>Spam Act 2003</em> (Cth) for all commercial
+    electronic messages. If you are in the EU or UK, Section 9 sets out our legal bases under the
+    GDPR.
+  </p>
+  <p>
+    This policy covers the ForgeFit iOS app, the website at
+    <a href="https://forgefit.fitness">forgefit.fitness</a>, and our backend services.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>The short version:</strong> we collect what we need to run your training log and AI
+      coach, and nothing more. We never sell your data, never use it for advertising, and never use
+      your Apple Health data for anything except showing you your own recovery. You can turn analytics
+      off, export everything, and permanently delete your account and all its data from inside the
+      app at any time.
+    </p>
+  </div>
+
+  <h2 id="collect">1. What we collect</h2>
+
+  <h3>Account and profile</h3>
+  <ul>
+    <li>
+      <strong>Account:</strong> your email address, display name, and a password (stored only as a
+      secure hash; we never see the plain text). If you use Sign in with Apple or Google, we receive
+      only the basic identity information those providers return; with Apple you may choose to hide
+      your real email.
+    </li>
+    <li>
+      <strong>Guest mode:</strong> if you start without registering, we create an anonymous account
+      identified by a generated ID on your device. It holds no personal details until you choose to
+      register.
+    </li>
+    <li>
+      <strong>Fitness profile:</strong> gender, date of birth, height, body weight, training goal,
+      experience level, training days per week, session length, available equipment, and any injuries
+      you tell us about, all used to tailor plans and AI suggestions.
+    </li>
+  </ul>
+
+  <h3>Training data you log</h3>
+  <ul>
+    <li>
+      Workouts, exercises, sets, reps, weights, RPE, rest times, personal records, training plans and
+      templates, goals, body measurements, and any notes you add.
+    </li>
+    <li>
+      <strong>Imported history.</strong> If you import a workout history from another app, that file
+      and the training records inside it are stored in your account exactly as your own logged data
+      is.
+    </li>
+    <li>
+      <strong>Progress photos and programme screenshots</strong> you choose to upload. These are
+      stored privately and are visible only to you. They are never shared to any social feature, never
+      made public, and never used for any purpose other than showing them back to you.
+    </li>
+  </ul>
+
+  <h3>Health and fitness data from Apple Health</h3>
+  <ul>
+    <li>
+      Only with your permission, and only these categories: steps, heart rate, heart-rate variability
+      (HRV), resting heart rate, sleep, and active energy. See Section 2.
+    </li>
+  </ul>
+
+  <h3>Voice input</h3>
+  <ul>
+    <li>
+      If you use Ember's voice mode, your speech is converted to text so it can be sent as a message.
+      See Section 3.
+    </li>
+  </ul>
+
+  <h3>Social data (only if you use social features)</h3>
+  <ul>
+    <li>
+      A username you choose, your friend connections, workouts you share to your feed, likes and
+      comments you post, and any users you block. See Section 5.
+    </li>
+  </ul>
+
+  <h3>Device and technical data</h3>
+  <ul>
+    <li>
+      <strong>Push notification token:</strong> a device identifier issued by Apple or Google that
+      lets us deliver notifications you've asked for (see Section 7).
+    </li>
+    <li>
+      <strong>Server logs and error diagnostics:</strong> when a request to our servers fails,
+      technical details of that request are recorded so we can fix it.
+    </li>
+    <li>
+      <strong>Product analytics:</strong> anonymous feature-usage events, which you can switch off
+      (see Section 6).
+    </li>
+  </ul>
+
+  <h3>Subscription and billing</h3>
+  <ul>
+    <li>
+      ForgeFit V1 is free and no subscription is currently sold. The app includes the
+      <strong>RevenueCat</strong> purchase SDK so subscriptions can be enabled in a future release; it
+      is inert until then. If and when paid tiers launch, iOS purchases are processed by Apple's
+      In-App Purchase and web purchases by Stripe. <strong>We never see or store your card
+      details</strong>: Apple and Stripe handle those. We would receive only your subscription
+      status and a purchase identifier.
+    </li>
+  </ul>
+
+  <h3>Waitlist</h3>
+  <ul>
+    <li>
+      If you join the waitlist, we collect your email address, IP address (for rate limiting and abuse
+      prevention), and signup and confirmation timestamps together with the version of the consent
+      wording shown to you: this is how we evidence double opt-in under the Spam Act.
+    </li>
+  </ul>
+
+  <h2 id="health">2. Apple Health data</h2>
+  <p>
+    ForgeFit uses Apple Health to show you your recovery and training readiness. We follow Apple's
+    HealthKit requirements:
+  </p>
+  <ul>
+    <li>
+      We only <strong>read</strong> health data: steps, heart rate, HRV, resting heart rate, sleep
+      and active energy. <strong>We never write to your Health record.</strong>
+    </li>
+    <li>
+      Health data is used <strong>solely</strong> to calculate and display your recovery, strain and
+      readiness, and to scale AI-generated training suggestions. We <strong>never</strong> use it for
+      advertising or marketing, and we <strong>never</strong> sell it or disclose it to any data
+      broker.
+    </li>
+    <li>
+      Health data is not stored in iCloud by us and is not used for any purpose you have not granted
+      permission for.
+    </li>
+    <li>
+      Summary recovery values derived from this data are stored on our servers so your recovery
+      history is available across devices. The underlying raw Health records stay on your device.
+    </li>
+    <li>
+      You can revoke access at any time in iOS <em>Settings → Privacy &amp; Security → Health</em>.
+      Revoking access does not delete workouts you have already logged in ForgeFit.
+    </li>
+  </ul>
+  <p>
+    Health information is <strong>sensitive information</strong> under the Privacy Act and
+    <strong>special category data</strong> under the GDPR. We collect it only with your express
+    consent, given through the iOS Health permission prompt, and you may withdraw that consent at any
+    time as described above.
+  </p>
+
+  <h2 id="voice">3. Voice and microphone</h2>
+  <p>
+    Ember has an optional voice mode. When you use it, and only while you are actively holding or
+    running a voice session:
+  </p>
+  <ul>
+    <li>
+      Your microphone is accessed and your speech is converted to text using
+      <strong>Apple's on-device and system speech recognition</strong>, which is governed by Apple's
+      own privacy terms.
+    </li>
+    <li>
+      <strong>We do not record, store, or transmit raw audio to our servers.</strong> Only the
+      resulting text is sent, and it is treated exactly like a message you typed.
+    </li>
+    <li>
+      Ember can also read replies aloud using the system text-to-speech voice. This happens on your
+      device.
+    </li>
+    <li>
+      Microphone and speech recognition permissions are requested separately by iOS and can be revoked
+      at any time in <em>Settings → Privacy &amp; Security</em>.
+    </li>
+  </ul>
+
+  <h2 id="ai">4. AI features</h2>
+  <p>ForgeFit uses third-party AI models to generate coaching responses, plans, critiques and images:</p>
+  <ul>
+    <li>
+      <strong>Anthropic (Claude)</strong>: coaching chat, workout and plan generation, progression
+      suggestions, and programme critique. Processed under
+      <a href="https://www.anthropic.com/legal/privacy" rel="noopener">Anthropic's privacy policy</a>.
+    </li>
+    <li>
+      <strong>Google (Gemini)</strong>: image generation for features such as share cards. Processed
+      under <a href="https://policies.google.com/privacy" rel="noopener">Google's privacy policy</a>.
+    </li>
+  </ul>
+  <p>
+    To produce a response we send the relevant inputs: your message, any programme text or image you
+    submit, and the relevant parts of your training history and fitness profile. Providers process the
+    request to return a result and are contractually restricted from using your inputs to train their
+    models beyond what their own terms permit.
+  </p>
+  <p>
+    <strong>AI output is not medical, fitness or professional advice.</strong> It is generated
+    automatically and can be wrong. See our <a href="/terms">Terms of Service</a>.
+  </p>
+
+  <h2 id="social">5. Social features and sharing</h2>
+  <p>
+    ForgeFit includes optional social features. <strong>They are off by default and opt-in.</strong>
+    If you never enable them, none of the data below is collected.
+  </p>
+
+  <h3>What becomes visible to others</h3>
+  <ul>
+    <li>
+      <strong>Your username and display name</strong> are visible to other users, including in search
+      and on leaderboards.
+    </li>
+    <li>
+      <strong>Workouts you share</strong> appear in your friends' feed, where they can like and comment
+      on them. You choose your default visibility in
+      <em>Settings → Privacy &amp; Social</em>, and you can hide any individual workout.
+    </li>
+    <li>
+      <strong>Comments and likes you post</strong> are visible to everyone who can see that workout.
+    </li>
+    <li>
+      <strong>Leaderboard entries</strong> show your username and the relevant training statistic.
+    </li>
+  </ul>
+
+  <h3>What never becomes visible</h3>
+  <ul>
+    <li>Your email address, date of birth, body weight and body measurements.</li>
+    <li>Your progress photos: these are never shared to any social surface.</li>
+    <li>Your Apple Health data, recovery scores, HRV or sleep.</li>
+    <li>Your conversations with Ember.</li>
+  </ul>
+
+  <h3>Blocking and reporting</h3>
+  <p>
+    You can block any user, which stops them contacting you or seeing your activity. You can report
+    any post, comment or profile that breaches our
+    <a href="/community-guidelines">Community Guidelines</a>, and we action reports within 24 hours.
+    Reports are stored with the reporting user's ID so we can act on them and identify abuse of the
+    reporting system itself.
+  </p>
+
+  <h3>Public share links</h3>
+  <p>
+    If you choose to share a programme critique as a link, the critique text and the programme you
+    submitted are stored and made available at an unguessable public URL so it can be opened by anyone
+    you send it to and previewed by messaging apps. <strong>This content is public to anyone holding
+    the link</strong> and is not tied to your name or account. Do not share a critique containing
+    anything you would not want a stranger to read. Email
+    <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a> to have a share link
+    revoked.
+  </p>
+
+  <h2 id="analytics">6. Analytics and your opt-out</h2>
+  <p>
+    We use <strong>PostHog</strong> for first-party product analytics, which features get used, and
+    where the app can improve. Events are tied to a randomly generated identifier stored on your
+    device, not to your name, email, IDFA or any cross-app advertising identifier.
+  </p>
+  <p>
+    We do <strong>not</strong> track you across other apps or websites, which is why ForgeFit does not
+    show the App Tracking Transparency prompt.
+  </p>
+  <p>
+    You can turn analytics off completely at any time:
+    <em>Settings → Privacy &amp; Social → "Share anonymous usage data"</em>. When it is off, no
+    product-analytics events are sent.
+  </p>
+  <p>
+    Separately, <strong>Sentry</strong> records technical details of failed server requests for
+    diagnostics. This is server-side error monitoring, not device or behavioural tracking, and it is
+    necessary to keep the service working.
+  </p>
+
+  <h2 id="notifications">7. Push notifications</h2>
+  <p>
+    If you allow notifications, your device is issued a push token by Apple or Google which we store
+    against your account so we can deliver rest-timer alerts, workout reminders and achievement
+    notifications you have opted into.
+  </p>
+  <p>
+    You control which categories you receive in <em>Settings → Notifications</em> inside the app, and
+    can revoke notifications entirely in iOS Settings. Turning notifications off in iOS removes the
+    token's usefulness; deleting your account deletes the stored tokens.
+  </p>
+
+  <h2 id="use">8. How we use your data</h2>
+  <ul>
+    <li>Authenticate you and keep you signed in.</li>
+    <li>Store your workouts, plans, goals, measurements and photos so your history persists across devices.</li>
+    <li>Calculate and display recovery and readiness from Apple Health, if connected.</li>
+    <li>Generate AI workout plans, coaching responses and programme critiques.</li>
+    <li>Calculate ranks, achievements and progress statistics.</li>
+    <li>Operate social features, if you enable them, and enforce our Community Guidelines.</li>
+    <li>Send transactional emails (verification, password reset, waitlist confirmation) and notifications you have opted into.</li>
+    <li>Diagnose errors, prevent abuse, and improve the app.</li>
+    <li>Process subscription payments, if and when you subscribe.</li>
+    <li>Comply with our legal obligations.</li>
+  </ul>
+  <p>
+    <strong>We do not sell your personal information.</strong> We do not use it for advertising, and
+    we do not disclose it to anyone except the service providers listed in Section 10, each only to the
+    extent needed to run the service.
+  </p>
+
+  <h2 id="legal-basis">9. Legal bases (EU/UK users)</h2>
+  <p>If the GDPR applies to you, we rely on the following legal bases:</p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Purpose</th><th>Legal basis</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Providing the app and your account</td><td>Performance of a contract (Art. 6(1)(b))</td></tr>
+        <tr><td>Apple Health data</td><td>Explicit consent (Art. 9(2)(a)): withdrawable in iOS Settings</td></tr>
+        <tr><td>Voice input</td><td>Consent (Art. 6(1)(a)): withdrawable in iOS Settings</td></tr>
+        <tr><td>Social features</td><td>Consent (Art. 6(1)(a)): opt-in, withdrawable in app</td></tr>
+        <tr><td>Product analytics</td><td>Consent (Art. 6(1)(a)): opt-out in app</td></tr>
+        <tr><td>Error monitoring, security, abuse prevention</td><td>Legitimate interests (Art. 6(1)(f))</td></tr>
+        <tr><td>Transactional email</td><td>Performance of a contract (Art. 6(1)(b))</td></tr>
+        <tr><td>Waitlist marketing email</td><td>Consent (Art. 6(1)(a)): double opt-in, unsubscribe any time</td></tr>
+        <tr><td>Billing and tax records</td><td>Legal obligation (Art. 6(1)(c))</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    You have the right to access, rectify, erase, restrict and port your data, to object to processing
+    based on legitimate interests, and to lodge a complaint with your local supervisory authority.
+    Section 12 explains how to exercise these.
+  </p>
+
+  <h2 id="providers">10. Service providers</h2>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Provider</th><th>Purpose</th><th>Location</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Supabase</td><td>Authentication, database, file storage (including progress photos)</td><td>US</td></tr>
+        <tr><td>Vercel</td><td>Server and website hosting</td><td>US</td></tr>
+        <tr><td>Anthropic</td><td>AI coaching, plan generation, critique</td><td>US</td></tr>
+        <tr><td>Google</td><td>Gemini image generation; Sign in with Google</td><td>US</td></tr>
+        <tr><td>PostHog</td><td>Anonymous product analytics (opt-out available)</td><td>US / EU</td></tr>
+        <tr><td>Sentry</td><td>Server error diagnostics</td><td>US</td></tr>
+        <tr><td>Resend</td><td>Transactional and waitlist email delivery</td><td>US</td></tr>
+        <tr><td>RevenueCat</td><td>Subscription management (inert until paid tiers launch)</td><td>US</td></tr>
+        <tr><td>Stripe</td><td>Web subscription billing (when applicable)</td><td>US</td></tr>
+        <tr><td>Apple</td><td>Sign in with Apple, HealthKit, speech recognition, push, In-App Purchase</td><td>US</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Each provider receives only the minimum data needed to perform its function, and none is permitted
+    to use your data for its own marketing.
+  </p>
+
+  <h2 id="retention">11. Data retention</h2>
+  <ul>
+    <li><strong>App data:</strong> retained while your account exists. Deleted permanently within 30 days of you deleting your account.</li>
+    <li><strong>Progress photos:</strong> deleted when you delete the photo, or with your account.</li>
+    <li><strong>Social content:</strong> comments and likes are deleted with your account. Where a comment is needed as evidence in an unresolved abuse report, it may be retained until that report is closed.</li>
+    <li><strong>Public share links:</strong> retained until you ask us to revoke them, since they are not tied to your account.</li>
+    <li><strong>Push tokens:</strong> deleted when you sign out, revoke notifications, or delete your account.</li>
+    <li><strong>Analytics:</strong> anonymous, retained in aggregate, not linked to your identity.</li>
+    <li><strong>Waitlist:</strong> retained until you unsubscribe or launch completes. Consent audit records kept for 3 years after the last message, as the Spam Act requires.</li>
+    <li><strong>Server error logs:</strong> retained up to 90 days.</li>
+    <li><strong>Billing records:</strong> retained by Apple, Stripe and us as long as tax and audit law requires (generally 5 years in Australia).</li>
+  </ul>
+
+  <h2 id="rights">12. Your rights and controls</h2>
+  <p>You control your data. From inside the app:</p>
+  <ul>
+    <li><strong>Access and export</strong>: <em>Settings → Data → Export All Data</em> (APP 12; GDPR Art. 15 and 20).</li>
+    <li><strong>Correct</strong>: <em>Settings → Profile</em> (APP 13; GDPR Art. 16).</li>
+    <li><strong>Opt out of analytics</strong>: <em>Settings → Privacy &amp; Social</em>.</li>
+    <li><strong>Control social visibility</strong>: <em>Settings → Privacy &amp; Social</em>, plus per-workout hiding and user blocking.</li>
+    <li><strong>Delete</strong>: <em>Settings → Delete Account</em>. Permanent and irreversible (APP 11.2; GDPR Art. 17).</li>
+    <li><strong>Waitlist</strong>: use the unsubscribe link in any email.</li>
+  </ul>
+  <p>
+    For anything you cannot do in the app, including revoking a public share link, restricting
+    processing, or objecting to processing: email
+    <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a>. We respond within 30 days.
+  </p>
+  <p>
+    If you believe we have breached the APPs, please complain to us first. If you are not satisfied,
+    you may complain to the
+    <a href="https://www.oaic.gov.au/privacy/privacy-complaints" rel="noopener">Office of the
+    Australian Information Commissioner (OAIC)</a>. EU and UK users may complain to their local data
+    protection authority. California residents have rights under the CCPA/CPRA, including the right to
+    know and delete: note that we do not sell or share personal information as those terms are
+    defined.
+  </p>
+
+  <h2 id="overseas">13. Overseas disclosure</h2>
+  <p>
+    Your data may be processed in the <strong>United States</strong>, and for PostHog optionally the
+    <strong>European Union</strong>, by the providers listed in Section 10. We take reasonable steps to
+    ensure they handle your information consistently with the APPs (APP 8). For transfers of EU/UK
+    personal data, we rely on the providers' Standard Contractual Clauses or equivalent transfer
+    mechanisms under their data processing agreements.
+  </p>
+
+  <h2 id="children">14. Children</h2>
+  <p>
+    ForgeFit is intended for users aged <strong>16 and over</strong>. We do not knowingly collect
+    personal information from anyone under 16. If you believe a child under 16 has created an account,
+    email <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a> and we will delete it
+    promptly.
+  </p>
+
+  <h2 id="security">15. Security and data breaches</h2>
+  <p>
+    Passwords are hashed, data in transit is encrypted with TLS, and card details never touch our
+    servers. Access to your data is authenticated and scoped to your account. Progress photos are
+    stored in private storage that is not publicly listable.
+  </p>
+  <p>
+    No system is perfectly secure, but we take reasonable steps to protect your information (APP 11).
+    If a data breach occurs that is likely to result in serious harm, we will notify affected users and
+    the OAIC as required by the <em>Notifiable Data Breaches</em> scheme, and any other regulator we
+    are obliged to inform.
+  </p>
+  <p>
+    If you believe your account has been compromised, change your password and email
+    <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a> immediately.
+  </p>
+
+  <h2 id="website">16. This website</h2>
+  <p>
+    <a href="https://forgefit.fitness">forgefit.fitness</a> sets <strong>no cookies</strong>, runs
+    <strong>no analytics or advertising trackers</strong>, and loads <strong>no third-party
+    resources</strong>: fonts and images are served from our own domain, so no data about your visit
+    is sent to any other company.
+  </p>
+  <p>
+    If you submit the waitlist form we receive your email address, your IP address (used for rate
+    limiting), and a timestamp. We send a confirmation email you must click before we add you to the
+    list, and every email includes an unsubscribe link.
+  </p>
+
+  <h2 id="changes">17. Changes to this policy</h2>
+  <p>
+    If we change this policy materially, we will notify you in the app or by email and update the
+    "Last updated" date above. Previous versions are available on request.
+  </p>
+
+  <h2 id="contact">18. Contact</h2>
+  <p>
+    Campbell Blair, trading as ForgeFit<br />
+    ABN 14 278 891 663 &middot; Australia<br />
+    Privacy: <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a><br />
+    Safety and abuse: <a href="mailto:safety@forgefit.fitness">safety@forgefit.fitness</a><br />
+    General: <a href="mailto:hello@forgefit.fitness">hello@forgefit.fitness</a>
+  </p>
+  <p>
+    A postal address is available on request to any individual or regulator who requires one for a
+    formal privacy complaint.
+  </p>
+</Legal>

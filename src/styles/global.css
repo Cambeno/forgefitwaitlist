@@ -1,0 +1,175 @@
+/* ── ForgeFit marketing site — design tokens & base ──────────────────────
+   Single source of truth for the whole site. Previously the landing page and
+   the legal pages ran two unrelated visual systems; everything now inherits
+   from here.
+   Fonts are self-hosted via @fontsource (imported in Base.astro) rather than
+   fetched from fonts.googleapis.com — that removes a third-party request that
+   leaked visitor IPs to Google and contradicted the privacy policy's claim
+   that the site makes no third-party calls.
+------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #0a0a0c;
+  --bg-2: #111114;
+  --bg-3: #1a1a1f;
+
+  --text: #f4f4f6;
+  --text-2: #9a9aa2;
+  --text-3: #7d7d84;
+
+  --lime: #b5f23d;
+  --lime-dark: #7dc728;
+  --ink: #06060a;
+  --line: rgba(255, 255, 255, 0.07);
+  --line-2: rgba(255, 255, 255, 0.12);
+
+  --display: 'Archivo', system-ui, -apple-system, sans-serif;
+  --body: 'Barlow', system-ui, -apple-system, sans-serif;
+
+  --wrap: 1120px;
+  --read: 720px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Anchor links in long guides shouldn't land under the sticky header. */
+  scroll-padding-top: 84px;
+}
+
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+/* Visible focus for keyboard users — the original page had none. */
+:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+
+/* Skip link — keyboard users shouldn't have to tab the whole nav. */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--lime);
+  color: var(--ink);
+  padding: 12px 20px;
+  font-family: var(--display);
+  font-weight: 800;
+  border-radius: 0 0 10px 0;
+}
+.skip:focus {
+  left: 0;
+}
+
+/* ── Shared type scale ────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--display);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+.kicker {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 14px;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--lime);
+  border: 0;
+  border-radius: 12px;
+  padding: 14px 24px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn:hover {
+  background: #c4ff52;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line-2);
+}
+.btn-ghost:hover {
+  background: var(--bg-2);
+  border-color: var(--lime);
+}
+
+/* ── Reveal on scroll (shared by every page) ──────────────────────────── */
+.rv {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rv {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

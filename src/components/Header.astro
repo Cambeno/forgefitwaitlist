@@ -1,0 +1,193 @@
+---
+const nav = [
+  { href: '/features', label: 'Features' },
+  { href: '/exercises', label: 'Exercises' },
+  { href: '/blog', label: 'Guides' },
+  { href: '/help', label: 'Help' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '');
+---
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/">
+      <img src="/forge-logo.png" alt="" width="30" height="30" />
+      <span>ForgeFit</span>
+    </a>
+
+    <nav class="links" aria-label="Main">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class={path === item.href || path.startsWith(item.href + '/') ? 'is-current' : ''}
+            aria-current={path === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a class="nav-cta" href="/#join">Join the waitlist</a>
+
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="mobile" id="mobile-nav" aria-label="Main" hidden>
+    <div class="wrap">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a class="m-cta" href="/#join">Join the waitlist</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 10, 12, 0.86);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 64px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .brand img {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+  }
+  .brand span {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  .links {
+    display: flex;
+    gap: 26px;
+  }
+  .links a {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .links a:hover,
+  .links a.is-current {
+    color: var(--text);
+  }
+  .nav-cta {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    background: var(--lime);
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .nav-cta:hover {
+    background: #c4ff52;
+  }
+  .nav-cta:active {
+    transform: scale(0.97);
+  }
+
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 4px;
+  }
+  .burger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .burger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .burger[aria-expanded='true'] span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger[aria-expanded='true'] span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .mobile {
+    border-top: 1px solid var(--line);
+    padding: 12px 0 20px;
+  }
+  .mobile .wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mobile a {
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-2);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile a:hover {
+    color: var(--text);
+  }
+  .mobile .m-cta {
+    margin-top: 12px;
+    border: 0;
+    text-align: center;
+    background: var(--lime);
+    color: var(--ink);
+    font-family: var(--display);
+    font-weight: 800;
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  @media (max-width: 860px) {
+    .links,
+    .nav-cta {
+      display: none;
+    }
+    .burger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const burger = document.querySelector<HTMLButtonElement>('.burger');
+  const mobile = document.querySelector<HTMLElement>('#mobile-nav');
+  burger?.addEventListener('click', () => {
+    const open = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!open));
+    if (mobile) mobile.hidden = open;
+  });
+</script>

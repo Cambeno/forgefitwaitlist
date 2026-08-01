@@ -1,0 +1,274 @@
+---
+import Base from '../layouts/Base.astro';
+import SignupForm from '../components/SignupForm.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  published: Date;
+  updated?: Date;
+  faq?: { q: string; a: string }[];
+}
+
+const { title, description, published, updated, faq = [] } = Astro.props;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+const iso = (d: Date) => d.toISOString().split('T')[0];
+
+const schema: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    datePublished: iso(published),
+    dateModified: iso(updated ?? published),
+    author: { '@type': 'Person', name: 'Campbell Blair' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ForgeFit',
+      logo: { '@type': 'ImageObject', url: 'https://forgefit.fitness/forge-logo.png' },
+    },
+    mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+  },
+];
+
+if (faq.length) {
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  });
+}
+---
+
+<Base title={`${title} | ForgeFit`} description={description} schema={schema}>
+  <article>
+    <div class="wrap head">
+      <a class="back" href="/blog">← All training guides</a>
+      <h1>{title}</h1>
+      <p class="lede">{description}</p>
+      <p class="meta">
+        <time datetime={iso(published)}>{fmt(published)}</time>
+        {updated && <> &middot; Updated <time datetime={iso(updated)}>{fmt(updated)}</time></>}
+      </p>
+    </div>
+
+    <div class="wrap body">
+      <slot />
+    </div>
+
+    {
+      faq.length > 0 && (
+        <div class="wrap body">
+          <h2 id="faq">Frequently asked questions</h2>
+          <div class="faq">
+            {faq.map((f) => (
+              <details>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    <aside class="wrap cta-wrap">
+      <div class="cta">
+        <p class="kicker">Stop programming in a notes app</p>
+        <h2>ForgeFit builds this split for you, and adjusts it as you recover.</h2>
+        <p class="c-sub">
+          Log every set in three taps, and let Ember reshape the week around your real recovery. Join
+          the waitlist for first access.
+        </p>
+        <SignupForm hint="Free at launch. No spam." />
+      </div>
+    </aside>
+  </article>
+</Base>
+
+<style>
+  article { padding-top: clamp(40px, 6vw, 64px); }
+
+  .head, .body, .cta-wrap { max-width: calc(var(--read) + 80px); }
+
+  .back {
+    display: inline-block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-3);
+    text-decoration: none;
+    margin-bottom: 24px;
+  }
+  .back:hover { color: var(--lime); }
+
+  h1 {
+    font-weight: 900;
+    font-size: clamp(32px, 5.2vw, 54px);
+    text-wrap: balance;
+  }
+  .lede {
+    margin-top: 18px;
+    font-size: clamp(17px, 2vw, 20px);
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+  .meta {
+    margin-top: 18px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--text-3);
+  }
+
+  /* ── Long-form prose ──────────────────────────────────── */
+  .body { padding-top: 8px; }
+
+  .body :global(h2) {
+    font-weight: 900;
+    font-size: clamp(24px, 3.2vw, 32px);
+    margin: clamp(44px, 6vw, 64px) 0 16px;
+    scroll-margin-top: 84px;
+  }
+  .body :global(h3) {
+    font-weight: 800;
+    font-size: clamp(18px, 2.2vw, 22px);
+    margin: 36px 0 12px;
+    scroll-margin-top: 84px;
+  }
+  .body :global(p) {
+    margin: 16px 0;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-2);
+  }
+  .body :global(strong) { color: var(--text); font-weight: 600; }
+  .body :global(a) {
+    color: var(--lime);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .body :global(ul),
+  .body :global(ol) {
+    margin: 16px 0 16px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .body :global(li) {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text-2);
+    padding-left: 4px;
+  }
+  .body :global(li::marker) { color: var(--lime); }
+
+  /* Editorial pull-quote: scale and colour carry the emphasis, not a stripe.
+     Hierarchy survives greyscale because the type steps up a full size. */
+  .body :global(blockquote) {
+    margin: 36px 0;
+    padding: 0 0 0 clamp(0px, 2vw, 24px);
+  }
+  .body :global(blockquote p) {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(19px, 2.4vw, 23px);
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  /* Workout tables scroll rather than blowing out the page on mobile. */
+  .body :global(.table-scroll) {
+    overflow-x: auto;
+    margin: 24px 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .body :global(table) {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 520px;
+    font-size: 15px;
+  }
+  .body :global(thead) { background: var(--bg-2); }
+  .body :global(th) {
+    text-align: left;
+    padding: 12px 16px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+  .body :global(td) {
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+    color: var(--text-2);
+  }
+  .body :global(tbody tr:hover) { background: rgba(255, 255, 255, 0.02); }
+  .body :global(td:first-child) { color: var(--text); font-weight: 600; }
+
+  .body :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 48px 0;
+  }
+
+  /* ── FAQ ──────────────────────────────────────────────── */
+  .faq { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .faq details {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 20px;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 16px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    color: var(--lime);
+    font-size: 22px;
+    line-height: 1;
+    flex: none;
+  }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p {
+    margin-top: 12px;
+    color: var(--text-2);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* ── Closing CTA ──────────────────────────────────────── */
+  .cta-wrap { margin-top: clamp(56px, 8vw, 80px); }
+  .cta {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: clamp(28px, 5vw, 44px);
+  }
+  .cta h2 { font-weight: 900; font-size: clamp(24px, 3.4vw, 32px); text-wrap: balance; }
+  .c-sub { margin-top: 14px; color: var(--text-2); font-size: 16px; max-width: 52ch; }
+</style>

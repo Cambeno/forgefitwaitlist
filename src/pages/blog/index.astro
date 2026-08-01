@@ -1,0 +1,142 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'ForgeFit Training Guides',
+  description:
+    'Free, complete workout split guides: every session, set, rep and progression written out.',
+  url: 'https://forgefit.fitness/blog',
+  hasPart: guides.map((g) => ({
+    '@type': 'Article',
+    headline: g.data.title,
+    url: `https://forgefit.fitness/blog/${g.id}`,
+    datePublished: g.data.published.toISOString().split('T')[0],
+  })),
+};
+---
+
+<Base
+  title="Training Guides: Workout Splits, Programmes and Progression | ForgeFit"
+  description="Free workout split guides with every session, set, rep and progression written out. Push/pull/legs, upper/lower, 3, 4 and 5 day splits, and the Arnold split."
+  schema={schema}
+>
+  <section class="head">
+    <div class="wrap">
+      <p class="kicker">Training guides</p>
+      <h1>Complete workout splits. No email required.</h1>
+      <p class="lede">
+        Every guide here is the full programme: the exact exercises, sets, reps, rest periods and
+        progression scheme. Not an outline, not a teaser for a PDF. Pick the one that matches the days
+        you can actually train.
+      </p>
+    </div>
+  </section>
+
+  <section class="list">
+    <div class="wrap">
+      <div class="grid">
+        {
+          guides.map((g) => (
+            <a class="card rv" href={`/blog/${g.id}`}>
+              <span class="days">{g.data.daysLabel}</span>
+              <h2>{g.data.cardTitle}</h2>
+              <p class="blurb">{g.data.blurb}</p>
+              <p class="desc">{g.data.description}</p>
+              <span class="more">Read the guide →</span>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="next rv">
+        <h2>Looking for a single movement?</h2>
+        <p>
+          The <a href="/exercises">exercise library</a> covers how to perform each lift, which muscles
+          it trains, the mistakes that cost you reps, and where it fits in a programme.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    padding: clamp(48px, 7vw, 88px) 0 clamp(32px, 4vw, 48px);
+  }
+  h1 {
+    font-weight: 900;
+    font-size: clamp(34px, 5.4vw, 58px);
+    text-wrap: balance;
+    max-width: 18ch;
+  }
+  .lede {
+    margin-top: 20px;
+    font-size: clamp(16px, 1.8vw, 19px);
+    color: var(--text-2);
+    max-width: 62ch;
+    line-height: 1.6;
+  }
+
+  .list { padding-bottom: clamp(48px, 7vw, 80px); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    display: block;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 26px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  }
+  .card:hover {
+    border-color: rgba(181, 242, 61, 0.4);
+    background: var(--bg-3);
+    transform: translateY(-3px);
+  }
+  .days {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lime);
+  }
+  .card h2 {
+    font-weight: 900;
+    font-size: 22px;
+    margin: 10px 0 10px;
+  }
+  .blurb { font-size: 15px; color: var(--text); line-height: 1.5; }
+  .desc {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--text-3);
+    line-height: 1.55;
+  }
+  .more {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--lime);
+  }
+
+  .next {
+    margin-top: clamp(40px, 6vw, 64px);
+    padding: clamp(24px, 4vw, 36px);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+  .next h2 { font-weight: 900; font-size: clamp(20px, 2.6vw, 26px); }
+  .next p { margin-top: 12px; color: var(--text-2); font-size: 16px; max-width: 60ch; }
+  .next a { color: var(--lime); }
+</style>

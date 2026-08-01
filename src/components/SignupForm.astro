@@ -1,0 +1,234 @@
+---
+export interface Props {
+  hint?: string;
+  /** Extra classes for entrance animation on the hero instance. */
+  class?: string;
+}
+const { hint = 'Free at launch. First in line gets first access.', class: cls = '' } = Astro.props;
+---
+
+<form class:list={['signup', cls]} data-signup>
+  <div class="signup-row">
+    <input
+      type="email"
+      name="email"
+      placeholder="you@email.com"
+      autocomplete="email"
+      required
+      aria-label="Email address"
+    />
+    <button type="submit"><span data-label>Join the waitlist</span></button>
+  </div>
+  <input
+    type="text"
+    name="website"
+    value=""
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    style="position:absolute;left:-9999px"
+  />
+  <input type="hidden" name="ff_ts" value="" />
+  <p class="hint">{hint}</p>
+  <p class="err" role="alert"></p>
+  <p class="consent">
+    By joining you agree to our <a href="/terms">Terms</a> and
+    <a href="/privacy">Privacy Policy</a>. We'll email you to confirm: unsubscribe any time.
+  </p>
+  <div class="success">
+    <p class="s-title">You're in. <em>#<span class="pos-num">—</span></em> in line.</p>
+    <p class="s-sub">
+      Check your inbox to confirm your spot. We'll email you the moment access opens.
+    </p>
+  </div>
+</form>
+
+<style>
+  .signup {
+    margin-top: 30px;
+    max-width: 460px;
+    position: relative;
+  }
+  .signup-row {
+    display: flex;
+    gap: 10px;
+  }
+  .signup input[type='email'] {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg-2);
+    color: var(--text);
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    padding: 15px 16px;
+    font-family: var(--body);
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .signup input[type='email']:focus {
+    border-color: var(--lime);
+  }
+  .signup button {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--lime);
+    border: 0;
+    border-radius: 12px;
+    padding: 0 22px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px -8px rgba(181, 242, 61, 0.5);
+  }
+  .signup button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    left: -60%;
+    transform: skewX(-20deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    animation: shine 3.6s ease-in-out infinite;
+  }
+  @keyframes shine {
+    0%,
+    60% {
+      left: -60%;
+    }
+    100% {
+      left: 130%;
+    }
+  }
+  .signup button:hover {
+    background: #c4ff52;
+  }
+  .signup button:active {
+    transform: scale(0.97);
+  }
+  .signup button:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+  .signup .hint {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--text-3);
+  }
+  /* Express consent notice: required to evidence opt-in under the Spam Act. */
+  .signup .consent {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-3);
+    opacity: 0.8;
+  }
+  .signup .consent a {
+    color: var(--text-2);
+  }
+  .signup .consent a:hover {
+    color: var(--lime);
+  }
+  .signup .err {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ff6b61;
+    display: none;
+  }
+  .signup.is-error .err {
+    display: block;
+  }
+  .signup .success {
+    display: none;
+    background: var(--bg-2);
+    border: 1px solid rgba(181, 242, 61, 0.35);
+    border-radius: 14px;
+    padding: 18px 20px;
+    text-align: left;
+  }
+  .signup.is-success .signup-row,
+  .signup.is-success .hint,
+  .signup.is-success .consent,
+  .signup.is-success .err {
+    display: none;
+  }
+  .signup.is-success .success {
+    display: block;
+  }
+  .success .s-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+  }
+  .success .s-title em {
+    font-style: normal;
+    color: var(--lime);
+  }
+  .success .s-sub {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+
+  @media (max-width: 860px) {
+    .signup-row {
+      flex-direction: column;
+    }
+    .signup button {
+      padding: 15px 22px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .signup button::after {
+      animation: none;
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Wire contract is unchanged from the original static page: the existing
+  // Vercel function at /api/subscribe still does double opt-in + Resend.
+  document.querySelectorAll<HTMLInputElement>('input[name="ff_ts"]').forEach((el) => {
+    el.value = String(Date.now());
+  });
+
+  document.querySelectorAll<HTMLFormElement>('[data-signup]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button')!;
+      const labelEl = form.querySelector('[data-label]')!;
+      const errEl = form.querySelector<HTMLElement>('.err')!;
+      form.classList.remove('is-error');
+
+      const email = form.querySelector<HTMLInputElement>('input[type="email"]')!.value.trim();
+      const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]')?.value || '';
+      const ts = form.querySelector<HTMLInputElement>('input[name="ff_ts"]')?.value || '';
+
+      btn.disabled = true;
+      labelEl.textContent = 'Joining…';
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, website: honeypot, ff_ts: ts }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.error || 'Something went wrong. Try again.');
+        form.querySelector('.pos-num')!.textContent = data.position ?? '—';
+        form.classList.add('is-success');
+      } catch (err) {
+        errEl.textContent = err instanceof Error ? err.message : 'Something went wrong.';
+        form.classList.add('is-error');
+        btn.disabled = false;
+        labelEl.textContent = 'Try again';
+      }
+    });
+  });
+</script>

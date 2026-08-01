@@ -1,1 +1,17 @@
 .vercel
+
+# Astro build output and cache
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Env
+.env
+.env.production
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db

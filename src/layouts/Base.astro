@@ -1,0 +1,105 @@
+---
+import '@fontsource/archivo/600.css';
+import '@fontsource/archivo/800.css';
+import '@fontsource/archivo/900.css';
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/500.css';
+import '@fontsource/barlow/600.css';
+import '@fontsource/barlow/700.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** Absolute or root-relative OG image. Defaults to the brand mark. */
+  image?: string;
+  /** Emitted as <script type="application/ld+json"> when provided. */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  /** Set on pages that shouldn't be indexed (e.g. confirmation screens). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/forge-logo.png',
+  schema,
+  noindex = false,
+} = Astro.props;
+
+/**
+ * `build.format: 'file'` emits /exercises.html, so Astro.url.pathname carries
+ * the extension. Vercel serves these under clean URLs and the sitemap lists
+ * them without the extension, so the canonical must match that form — a
+ * canonical pointing at /exercises.html while the sitemap says /exercises is
+ * a self-inflicted duplicate-content signal.
+ */
+const cleanPath = Astro.url.pathname
+  .replace(/index\.html$/, '')
+  .replace(/\.html$/, '')
+  .replace(/\/$/, '');
+const canonical = new URL(cleanPath || '/', Astro.site).href.replace(/(?<!\/)\/$/, '');
+const ogImage = new URL(image, Astro.site).href;
+const schemaList = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0a0c" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:site_name" content="ForgeFit" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/png" href="/forge-logo.png" />
+    <link rel="alternate" type="application/rss+xml" title="ForgeFit Blog" href="/rss.xml" />
+
+    {
+      schemaList.map((s) => (
+        <script type="application/ld+json" set:html={JSON.stringify(s)} />
+      ))
+    }
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Shared scroll-reveal. Every page opts in by adding class="rv".
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              en.target.classList.add('in');
+              io.unobserve(en.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,242 @@
+---
+import Base from '../../layouts/Base.astro';
+import { exercises, MUSCLE_GROUPS, byMuscleGroup } from '../../data/exercises';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'ForgeFit Exercise Library',
+  description:
+    'How to perform each lift, the muscles it trains, the mistakes that cost you reps, and how to programme it.',
+  url: 'https://forgefit.fitness/exercises',
+};
+---
+
+<Base
+  title="Exercise Library: How To, Muscles Worked and Programming | ForgeFit"
+  description="A technique breakdown for every major lift: how to perform it, which muscles it trains, the mistakes that cost you reps, and how many sets and reps to run."
+  schema={schema}
+>
+  <section class="head">
+    <div class="wrap">
+      <p class="kicker">Exercise library</p>
+      <h1>Every lift, done properly.</h1>
+      <p class="lede">
+        Setup, execution, the mistakes that quietly cost you progress, and where each movement fits in
+        a programme. {exercises.length} exercises across {MUSCLE_GROUPS.length} muscle groups.
+      </p>
+
+      <div class="filters" role="group" aria-label="Filter by muscle group">
+        <button class="chip is-active" data-filter="all">All</button>
+        {
+          MUSCLE_GROUPS.map((g) => (
+            <button class="chip" data-filter={g}>
+              {g}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="list">
+    <div class="wrap">
+      {
+        MUSCLE_GROUPS.map((group) => {
+          const items = byMuscleGroup(group);
+          if (!items.length) return null;
+          return (
+            <div class="group" data-group={group}>
+              <div class="g-head">
+                <h2>{group}</h2>
+                <span class="g-count">{items.length}</span>
+              </div>
+
+              <div class="rows">
+                <div class="row row-head" aria-hidden="true">
+                  <span>Exercise</span>
+                  <span>Equipment</span>
+                  <span>Type</span>
+                  <span>Level</span>
+                </div>
+                {items.map((e) => (
+                  <a class="row" href={`/exercises/${e.slug}`}>
+                    <span class="r-name">
+                      <b>{e.name}</b>
+                      <em>{e.summary}</em>
+                    </span>
+                    <span class="r-meta" data-label="Equipment">{e.equipment}</span>
+                    <span class="r-meta" data-label="Type">{e.mechanics}</span>
+                    <span class="r-meta r-level" data-label="Level">{e.difficulty}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })
+      }
+
+      <p class="empty" hidden>No exercises in that group yet.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding: clamp(48px, 7vw, 88px) 0 clamp(24px, 3vw, 36px); }
+  h1 { font-weight: 900; font-size: clamp(34px, 5.4vw, 58px); }
+  .lede {
+    margin-top: 18px;
+    font-size: clamp(16px, 1.8vw, 19px);
+    color: var(--text-2);
+    max-width: 62ch;
+    line-height: 1.6;
+  }
+
+  .filters { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-2);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .chip:hover { border-color: var(--line-2); color: var(--text); }
+  .chip.is-active { background: var(--lime); border-color: var(--lime); color: var(--ink); }
+
+  .list { padding-bottom: clamp(48px, 7vw, 80px); }
+  .group { margin-top: clamp(36px, 5vw, 52px); }
+
+  .g-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+  .g-head h2 { font-weight: 900; font-size: clamp(20px, 2.6vw, 26px); }
+  .g-count {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--text-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Dense rows rather than a card grid. An exercise is a fact, so it gets a
+     row; the boxes were adding weight without adding information. */
+  .rows { border-top: 1px solid var(--line); }
+
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 110px 108px 104px;
+    gap: 20px;
+    align-items: baseline;
+    padding: 16px 8px 16px 0;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    transition: background 0.15s ease, padding-left 0.15s ease;
+  }
+  a.row:hover {
+    background: var(--bg-2);
+    padding-left: 10px;
+  }
+  a.row:hover .r-name b { color: var(--lime); }
+
+  .row-head {
+    padding: 0 8px 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .row-head span {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .r-name { display: block; min-width: 0; }
+  .r-name b {
+    display: block;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 16.5px;
+    letter-spacing: -0.01em;
+    transition: color 0.15s ease;
+  }
+  .r-name em {
+    display: block;
+    margin-top: 3px;
+    font-style: normal;
+    font-size: 14px;
+    color: var(--text-3);
+    line-height: 1.5;
+    max-width: 62ch;
+  }
+
+  .r-meta { font-size: 14px; color: var(--text-2); }
+  .r-level { color: var(--text-3); }
+
+  .empty { margin-top: 40px; color: var(--text-3); font-size: 16px; }
+
+  /* Below the breakpoint the columns collapse into a labelled stack, so the
+     metadata stays readable instead of being squeezed into 40px columns. */
+  @media (max-width: 760px) {
+    .row-head { display: none; }
+    .row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 16px 0;
+    }
+    .r-meta {
+      display: inline-block;
+      margin-right: 14px;
+      font-size: 12.5px;
+      color: var(--text-3);
+    }
+    .r-meta::before {
+      content: attr(data-label) ' ';
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      opacity: 0.65;
+      margin-right: 4px;
+    }
+    a.row:hover { padding-left: 0; }
+  }
+</style>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const groups = document.querySelectorAll<HTMLElement>('.group');
+  const empty = document.querySelector<HTMLElement>('.empty');
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter!;
+      chips.forEach((c) => c.classList.toggle('is-active', c === chip));
+
+      let visible = 0;
+      groups.forEach((g) => {
+        const show = filter === 'all' || g.dataset.group === filter;
+        g.hidden = !show;
+        if (show) visible++;
+      });
+      if (empty) empty.hidden = visible > 0;
+    });
+  });
+
+  // Deep link support: /exercises?group=Legs, used by the breadcrumb on each
+  // exercise page.
+  const requested = new URLSearchParams(location.search).get('group');
+  if (requested) {
+    document.querySelector<HTMLButtonElement>(`.chip[data-filter="${CSS.escape(requested)}"]`)?.click();
+  }
+</script>

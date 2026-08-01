@@ -1,0 +1,284 @@
+---
+import Base from '../layouts/Base.astro';
+
+/**
+ * Doubles as the App Store "Support URL". Apple requires that URL to reach a
+ * page with genuine support information and a working contact route: a
+ * marketing page is a common rejection reason.
+ */
+const categories = [
+  {
+    name: 'Getting started',
+    items: [
+      {
+        q: 'How do I log a workout?',
+        a: 'Tap Start Workout, choose a template or start empty, then add exercises. Each exercise shows your previous weight and reps as ghost values: tap the tick to log the same numbers, or type new ones. Finish the session to save it and bank the volume toward your rank.',
+      },
+      {
+        q: 'Can I import my history from another app?',
+        a: 'Yes. ForgeFit can import a workout history export from most major logging apps. Go to Settings → Data → Import and follow the prompts. Exercises are matched on name and equipment, so a dumbbell bench press and a barbell bench press stay separate.',
+      },
+      {
+        q: 'Do I need an account?',
+        a: 'You can start in guest mode, which creates an anonymous account tied to your device with no personal details. Registering with an email, Apple or Google lets you sync across devices and recover your data if you lose your phone.',
+      },
+      {
+        q: 'Is ForgeFit free?',
+        a: 'Version 1 is free to use, with all features available. If paid tiers are introduced later, existing features you already rely on will not be removed without notice.',
+      },
+    ],
+  },
+  {
+    name: 'Ember, the AI coach',
+    items: [
+      {
+        q: 'What can Ember actually do?',
+        a: 'Ember reads your training history, PRs, plan and recovery, then answers questions, builds full workouts and training plans, critiques programmes you paste in, and logs sets to your live workout while you train. You can talk to it or type.',
+      },
+      {
+        q: 'Is Ember\'s advice safe to follow?',
+        a: 'Ember is a training tool, not a medical professional. Its output is generated automatically and can be wrong. You are responsible for judging whether any suggestion is appropriate for you, and if you have an injury or a medical condition, speak to a qualified professional before acting on it.',
+      },
+      {
+        q: 'What happens to what I say to Ember?',
+        a: 'Your message and the relevant training context are sent to our AI provider to generate the response. Voice input is transcribed to text on your device by iOS. See the Privacy Policy for the full detail on AI processing.',
+      },
+    ],
+  },
+  {
+    name: 'Apple Health and recovery',
+    items: [
+      {
+        q: 'What Health data does ForgeFit read?',
+        a: 'Only steps, heart rate, heart-rate variability, resting heart rate, sleep and active energy, and only if you grant permission. ForgeFit never writes to your Health record.',
+      },
+      {
+        q: 'How do I disconnect Apple Health?',
+        a: 'iOS Settings → Privacy & Security → Health → ForgeFit, and turn off the categories you want to revoke. Your logged workouts stay in ForgeFit; only the recovery features stop updating.',
+      },
+      {
+        q: 'Why is my recovery score missing?',
+        a: 'Recovery needs sleep and HRV data from the previous night. If you did not wear a watch, or permissions were revoked, the score is shown as unavailable rather than guessed: a missing reading is not the same as a zero.',
+      },
+    ],
+  },
+  {
+    name: 'Your data and privacy',
+    items: [
+      {
+        q: 'How do I export my data?',
+        a: 'Settings → Data → Export All Data. You will get a copy of your workouts, exercises, plans, measurements and profile.',
+      },
+      {
+        q: 'How do I delete my account?',
+        a: 'Settings → Delete Account. This permanently deletes your account and all associated data, including progress photos. It is immediate and cannot be undone.',
+      },
+      {
+        q: 'How do I turn off analytics?',
+        a: 'Settings → Privacy & Social → "Share anonymous usage data". When it is off, no product analytics events are sent.',
+      },
+      {
+        q: 'Do you sell my data?',
+        a: 'No. ForgeFit does not sell personal data, does not use it for advertising, and does not share Apple Health data with anyone.',
+      },
+    ],
+  },
+  {
+    name: 'Community and safety',
+    items: [
+      {
+        q: 'How do I report abusive content or a user?',
+        a: 'Use the report control on any post, comment or profile, or email safety@forgefit.fitness. Reports are reviewed and acted on within 24 hours, and content that breaches the Community Guidelines is removed.',
+      },
+      {
+        q: 'How do I block someone?',
+        a: 'Open their profile and choose Block. They will no longer be able to send you requests, see your activity, or interact with your workouts.',
+      },
+      {
+        q: 'Who can see my workouts?',
+        a: 'Your workouts are private by default. Sharing to a friends feed is opt-in, you choose your visibility in Settings → Privacy & Social, and you can hide any individual workout. Progress photos are never shared and are visible only to you.',
+      },
+    ],
+  },
+  {
+    name: 'Troubleshooting',
+    items: [
+      {
+        q: 'My rest timer stopped when I locked my phone',
+        a: 'Make sure notifications are enabled for ForgeFit in iOS Settings → Notifications. The timer continues while locked and fires as a notification you can log the next set from, without notification permission it cannot alert you.',
+      },
+      {
+        q: 'My workout did not sync',
+        a: 'Workouts save locally first and sync when a connection is available. Open the app with a working connection and the queued sessions upload. If a workout is still missing after that, email support with the approximate date and we will check the server.',
+      },
+      {
+        q: 'I found a bug',
+        a: 'Email hello@forgefit.fitness with your device model, iOS version and what you were doing when it happened. Screenshots help a great deal.',
+      },
+    ],
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: categories.flatMap((c) =>
+    c.items.map((i) => ({
+      '@type': 'Question',
+      name: i.q,
+      acceptedAnswer: { '@type': 'Answer', text: i.a },
+    }))
+  ),
+};
+---
+
+<Base
+  title="Help Centre: ForgeFit Support"
+  description="Answers on logging workouts, Ember the AI coach, Apple Health and recovery, exporting or deleting your data, reporting content, and troubleshooting."
+  schema={schema}
+>
+  <section class="head">
+    <div class="wrap">
+      <p class="kicker">Help centre</p>
+      <h1>Support</h1>
+      <p class="lede">
+        Answers to the questions that come up most. If yours isn't here, email
+        <a href="mailto:hello@forgefit.fitness">hello@forgefit.fitness</a>: a real person reads it.
+      </p>
+      <nav class="jump" aria-label="Jump to section">
+        {categories.map((c) => <a href={`#${c.name.toLowerCase().replace(/[^a-z]+/g, '-')}`}>{c.name}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  <section class="body">
+    <div class="wrap">
+      {
+        categories.map((c) => (
+          <div class="cat" id={c.name.toLowerCase().replace(/[^a-z]+/g, '-')}>
+            <h2>{c.name}</h2>
+            <div class="faq">
+              {c.items.map((i) => (
+                <details>
+                  <summary>{i.q}</summary>
+                  <p set:html={i.a.replace(/(safety@forgefit\.fitness|hello@forgefit\.fitness)/g, '<a href="mailto:$1">$1</a>')} />
+                </details>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+
+      <div class="contact">
+        <h2>Still stuck?</h2>
+        <div class="contact-grid">
+          <div>
+            <b>General support</b>
+            <a href="mailto:hello@forgefit.fitness">hello@forgefit.fitness</a>
+          </div>
+          <div>
+            <b>Privacy requests</b>
+            <a href="mailto:privacy@forgefit.fitness">privacy@forgefit.fitness</a>
+          </div>
+          <div>
+            <b>Report content or abuse</b>
+            <a href="mailto:safety@forgefit.fitness">safety@forgefit.fitness</a>
+          </div>
+        </div>
+        <p class="sla">
+          We aim to reply within two business days. Safety and abuse reports are actioned within 24
+          hours.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding: clamp(48px, 7vw, 88px) 0 clamp(24px, 3vw, 32px); }
+  h1 { font-weight: 900; font-size: clamp(34px, 5.4vw, 58px); }
+  .lede {
+    margin-top: 18px;
+    font-size: clamp(16px, 1.8vw, 19px);
+    color: var(--text-2);
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+  .lede a { color: var(--lime); }
+  .jump { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .jump a {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-2);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .jump a:hover { border-color: var(--lime); color: var(--text); }
+
+  .body { padding-bottom: clamp(48px, 7vw, 80px); }
+  .body .wrap { max-width: calc(var(--read) + 120px); }
+  .cat { margin-top: clamp(40px, 5vw, 56px); scroll-margin-top: 84px; }
+  .cat h2 {
+    font-weight: 900;
+    font-size: clamp(21px, 2.8vw, 27px);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 16px;
+  }
+
+  .faq { display: flex; flex-direction: column; gap: 10px; }
+  .faq details {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 20px;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 16px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; color: var(--lime); font-size: 22px; line-height: 1; flex: none; }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p { margin-top: 12px; color: var(--text-2); font-size: 16px; line-height: 1.65; }
+  .faq details :global(a) { color: var(--lime); }
+
+  .contact {
+    margin-top: clamp(48px, 6vw, 64px);
+    padding: clamp(24px, 4vw, 36px);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+  .contact h2 { font-weight: 900; font-size: clamp(20px, 2.6vw, 26px); }
+  .contact-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .contact-grid b {
+    display: block;
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .contact-grid a { color: var(--lime); font-size: 15px; text-decoration: none; }
+  .contact-grid a:hover { text-decoration: underline; }
+  .sla { margin-top: 22px; font-size: 14px; color: var(--text-3); }
+</style>

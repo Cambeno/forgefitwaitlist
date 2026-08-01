@@ -1,0 +1,218 @@
+---
+import Legal from '../layouts/Legal.astro';
+
+const toc: [string, string][] = [
+  ['principle', 'The principle'],
+  ['not-allowed', 'What is not allowed'],
+  ['health', 'Health, bodies and substances'],
+  ['reporting', 'How to report'],
+  ['enforcement', 'What happens next'],
+  ['blocking', 'Blocking and controlling your feed'],
+  ['appeals', 'Appeals'],
+  ['contact', 'Contact'],
+];
+---
+
+<Legal
+  title="Community Guidelines"
+  description="The standard for behaviour on ForgeFit's social features: what is not allowed, how to report objectionable content or abuse, and how we enforce it within 24 hours."
+  updated="1 August 2026"
+  version="1.0"
+  toc={toc}
+>
+  <p>
+    ForgeFit's social features are optional. If you use them (sharing workouts, commenting, appearing
+    on leaderboards), these Guidelines apply. They form part of our
+    <a href="/terms">Terms of Service</a>.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>ForgeFit has zero tolerance for objectionable content and abusive users.</strong>
+      Content that breaches these Guidelines is removed, and the accounts responsible are suspended or
+      permanently ejected. We action reports within <strong>24 hours</strong>.
+    </p>
+  </div>
+
+  <h2 id="principle">The principle</h2>
+  <p>
+    This is a training app. People post their work, including sessions they are not proud of, weights
+    that are modest, and bodies at every stage of change. The bar is simple: if it would make someone
+    less likely to log their next session, it does not belong here.
+  </p>
+
+  <h2 id="not-allowed">What is not allowed</h2>
+
+  <h3>Harassment and abuse</h3>
+  <ul>
+    <li>Targeted insults, mockery, or pile-ons directed at another user.</li>
+    <li>Body-shaming, including comments on someone's weight, size, or appearance.</li>
+    <li>Ridiculing someone's numbers, technique, or progress.</li>
+    <li>Threats of violence, intimidation, or stalking.</li>
+    <li>Repeatedly contacting someone who has blocked you, or evading a block with a new account.</li>
+  </ul>
+
+  <h3>Hate speech and discrimination</h3>
+  <ul>
+    <li>
+      Content that attacks, demeans or dehumanises people on the basis of race, ethnicity, national
+      origin, religion, disability, age, sex, gender identity, or sexual orientation.
+    </li>
+    <li>Slurs, hate symbols, or support for hateful organisations.</li>
+  </ul>
+
+  <h3>Sexual and graphic content</h3>
+  <ul>
+    <li>Sexually explicit or pornographic content.</li>
+    <li>Unsolicited sexual comments about another user or their photos.</li>
+    <li>Gratuitously violent or gory content.</li>
+    <li>
+      <strong>Any sexual content involving minors is reported to the relevant authorities and results
+      in immediate, permanent termination.</strong>
+    </li>
+  </ul>
+
+  <h3>Privacy and impersonation</h3>
+  <ul>
+    <li>Posting another person's private information: address, phone number, workplace, or images of them without consent.</li>
+    <li>Impersonating another person, a coach, a brand, or ForgeFit staff.</li>
+    <li>Screenshotting and reposting another user's content to mock them.</li>
+  </ul>
+
+  <h3>Spam and manipulation</h3>
+  <ul>
+    <li>Commercial solicitation, coaching sales, or supplement promotion.</li>
+    <li>Links to external sites for the purpose of promotion.</li>
+    <li>Fabricated lifts or manipulated data to place on leaderboards.</li>
+    <li>Bulk or automated posting, or operating multiple accounts to inflate engagement.</li>
+  </ul>
+
+  <h3>Illegal activity</h3>
+  <ul>
+    <li>Content promoting or facilitating illegal activity.</li>
+    <li>Sale or sourcing of prescription drugs or controlled substances.</li>
+    <li>Content that infringes copyright or trademark.</li>
+  </ul>
+
+  <h2 id="health">Health, bodies and substances</h2>
+  <p>
+    Training communities have a specific set of failure modes. These are treated as seriously as any
+    other breach:
+  </p>
+  <ul>
+    <li>
+      <strong>No promotion of disordered eating.</strong> That includes glorifying extreme restriction,
+      purging, "what I eat in a day" content at dangerous calorie levels, or framing an eating disorder
+      as discipline.
+    </li>
+    <li>
+      <strong>No promotion of self-harm</strong> in any form, including training through injury framed
+      as toughness.
+    </li>
+    <li>
+      <strong>No sourcing, dosing advice, or promotion of anabolic steroids or other
+      performance-enhancing drugs.</strong> Discussing your own history factually is not a breach;
+      telling someone what to take, or where to get it, is.
+    </li>
+    <li>
+      <strong>No presenting yourself as a medical professional</strong> or giving medical advice you
+      are not qualified to give.
+    </li>
+  </ul>
+  <p>
+    If you are struggling with an eating disorder or thoughts of self-harm, please contact a
+    professional service in your country. In Australia, the Butterfly Foundation (1800 33 4673) and
+    Lifeline (13 11 14) can help.
+  </p>
+
+  <h2 id="reporting">How to report</h2>
+  <p>You can report any content or user, and you do not need to interact with them to do it.</p>
+  <ul>
+    <li>
+      <strong>In the app:</strong> use the report control on any workout post, comment, or user
+      profile. Choose a reason and add detail if you want to.
+    </li>
+    <li>
+      <strong>By email:</strong> <a href="mailto:safety@forgefit.fitness">safety@forgefit.fitness</a>,
+      including the username involved and a screenshot if you have one.
+    </li>
+  </ul>
+  <p>
+    Reports are confidential. We do not tell the reported user who reported them. Deliberately abusing
+    the report system to harass someone is itself a breach of these Guidelines.
+  </p>
+
+  <h2 id="enforcement">What happens next</h2>
+  <p>
+    <strong>Every report is reviewed and actioned within 24 hours.</strong> Depending on severity, we
+    will do one or more of the following:
+  </p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Severity</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Minor first breach</td>
+          <td>Content removed, warning issued to the user</td>
+        </tr>
+        <tr>
+          <td>Repeated breaches</td>
+          <td>Content removed, social features suspended for a period</td>
+        </tr>
+        <tr>
+          <td>Serious breach</td>
+          <td>Immediate permanent termination of the account</td>
+        </tr>
+        <tr>
+          <td>Illegal content</td>
+          <td>Immediate removal, permanent termination, and referral to law enforcement</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    We may remove content and suspend accounts without prior notice where the content is clearly
+    unlawful or presents a risk of harm. Users who are permanently ejected may not create new accounts.
+  </p>
+
+  <h2 id="blocking">Blocking and controlling your feed</h2>
+  <p>You do not have to wait for us to act. At any time you can:</p>
+  <ul>
+    <li>
+      <strong>Block a user</strong> from their profile. They can no longer send you friend requests,
+      see your activity, or interact with your workouts.
+    </li>
+    <li>
+      <strong>Hide any individual workout</strong> so it never appears in a feed.
+    </li>
+    <li>
+      <strong>Change your visibility</strong> in <em>Settings → Privacy &amp; Social</em>, including
+      keeping everything private.
+    </li>
+    <li>
+      <strong>Leave social entirely.</strong> Social features are opt-in and can be switched off
+      without affecting your training log.
+    </li>
+  </ul>
+  <p>
+    Your progress photos, body measurements, Apple Health data and Ember conversations are never
+    visible to other users under any setting.
+  </p>
+
+  <h2 id="appeals">Appeals</h2>
+  <p>
+    If your content was removed or your account was actioned and you believe we got it wrong, email
+    <a href="mailto:safety@forgefit.fitness">safety@forgefit.fitness</a> with your username and what
+    happened. We will review it and reply. We do not reinstate accounts terminated for illegal content
+    or content involving minors.
+  </p>
+
+  <h2 id="contact">Contact</h2>
+  <p>
+    Campbell Blair, trading as ForgeFit<br />
+    ABN 14 278 891 663 &middot; Australia<br />
+    Safety and abuse: <a href="mailto:safety@forgefit.fitness">safety@forgefit.fitness</a>
+  </p>
+</Legal>

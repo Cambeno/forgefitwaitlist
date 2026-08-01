@@ -1,0 +1,367 @@
+---
+import Base from '../../layouts/Base.astro';
+import SignupForm from '../../components/SignupForm.astro';
+import { exercises, byMuscleGroup } from '../../data/exercises';
+
+export function getStaticPaths() {
+  return exercises.map((exercise) => ({
+    params: { slug: exercise.slug },
+    props: { exercise },
+  }));
+}
+
+const { exercise: ex } = Astro.props;
+
+// Related = same muscle group, excluding this one.
+const related = byMuscleGroup(ex.muscleGroup)
+  .filter((e) => e.slug !== ex.slug)
+  .slice(0, 4);
+
+const schema: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: `How to do the ${ex.name}`,
+    description: ex.summary,
+    tool: [{ '@type': 'HowToTool', name: ex.equipment }],
+    step: [
+      ...ex.setup.map((s, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: 'Setup',
+        text: s,
+      })),
+      ...ex.execution.map((s, i) => ({
+        '@type': 'HowToStep',
+        position: ex.setup.length + i + 1,
+        name: 'Execution',
+        text: s,
+      })),
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Exercises', item: 'https://forgefit.fitness/exercises' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: ex.name,
+        item: `https://forgefit.fitness/exercises/${ex.slug}`,
+      },
+    ],
+  },
+];
+
+if (ex.faq.length) {
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: ex.faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  });
+}
+---
+
+<Base
+  title={`${ex.name}: How To, Muscles Worked and Common Mistakes | ForgeFit`}
+  description={`${ex.summary} Full technique breakdown, the muscles it trains, the mistakes that cost you reps, and how to programme it.`}
+  schema={schema}
+>
+  <article>
+    <div class="wrap head">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/exercises">Exercises</a> <span aria-hidden="true">/</span>
+        <a href={`/exercises?group=${ex.muscleGroup}`}>{ex.muscleGroup}</a>
+      </nav>
+
+      <h1>{ex.name}</h1>
+      {ex.aliases.length > 0 && <p class="aka">Also known as: {ex.aliases.join(' · ')}</p>}
+      <p class="lede">{ex.summary}</p>
+
+      <dl class="specs">
+        <div><dt>Primary</dt><dd>{ex.primary.join(', ')}</dd></div>
+        <div><dt>Secondary</dt><dd>{ex.secondary.length ? ex.secondary.join(', ') : '—'}</dd></div>
+        <div><dt>Equipment</dt><dd>{ex.equipment}</dd></div>
+        <div><dt>Type</dt><dd>{ex.mechanics}</dd></div>
+        <div><dt>Level</dt><dd>{ex.difficulty}</dd></div>
+      </dl>
+    </div>
+
+    <div class="wrap body">
+      <section>
+        <h2>How to do it</h2>
+        <h3>Set up</h3>
+        <ol class="steps">
+          {ex.setup.map((s) => <li>{s}</li>)}
+        </ol>
+        <h3>Perform the rep</h3>
+        <ol class="steps">
+          {ex.execution.map((s) => <li>{s}</li>)}
+        </ol>
+      </section>
+
+      <section>
+        <h2>Common mistakes</h2>
+        <ol class="mistakes">
+          {
+            ex.mistakes.map((m) => (
+              <li class="mistake">
+                <h3>{m.title}</h3>
+                <p>{m.detail}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section>
+        <h2>How to programme it</h2>
+        <div class="prog">
+          <div class="prog-nums">
+            <div><b>{ex.programming.sets}</b><span>sets</span></div>
+            <div><b>{ex.programming.reps}</b><span>reps</span></div>
+            <div><b>{ex.programming.rest}</b><span>rest</span></div>
+          </div>
+          <p>{ex.programming.note}</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Variations</h2>
+        <ul class="vars">
+          {ex.variations.map((v) => <li>{v}</li>)}
+        </ul>
+      </section>
+
+      {
+        ex.faq.length > 0 && (
+          <section>
+            <h2>Frequently asked questions</h2>
+            <div class="faq">
+              {ex.faq.map((f) => (
+                <details>
+                  <summary>{f.q}</summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        related.length > 0 && (
+          <section>
+            <h2>More {ex.muscleGroup.toLowerCase()} exercises</h2>
+            <div class="related">
+              {related.map((r) => (
+                <a href={`/exercises/${r.slug}`}>
+                  <b>{r.name}</b>
+                  <span>{r.equipment} · {r.mechanics}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </div>
+
+    <aside class="wrap cta-wrap">
+      <div class="cta">
+        <p class="kicker">Track it properly</p>
+        <h2>Every set, every PR, right where you need it.</h2>
+        <p class="c-sub">
+          ForgeFit shows last session's weight and reps inline as you log, so you always know what to
+          beat. Join the waitlist for first access.
+        </p>
+        <SignupForm hint="Free at launch. No spam." />
+      </div>
+    </aside>
+  </article>
+</Base>
+
+<style>
+  article { padding-top: clamp(32px, 5vw, 56px); }
+  .head, .body, .cta-wrap { max-width: calc(var(--read) + 80px); }
+
+  .crumbs { font-size: 13px; color: var(--text-3); margin-bottom: 20px; }
+  .crumbs a { text-decoration: none; color: var(--text-3); }
+  .crumbs a:hover { color: var(--lime); }
+  .crumbs span { margin: 0 6px; opacity: 0.5; }
+
+  h1 { font-weight: 900; font-size: clamp(32px, 5vw, 52px); text-wrap: balance; }
+  .aka { margin-top: 10px; font-size: 14px; color: var(--text-3); }
+  .lede {
+    margin-top: 16px;
+    font-size: clamp(16px, 1.9vw, 19px);
+    color: var(--text-2);
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+
+  .specs {
+    margin-top: 28px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 18px;
+  }
+  .specs dt {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .specs dd { margin-top: 6px; font-size: 14.5px; color: var(--text); }
+
+  .body section { margin-top: clamp(40px, 5vw, 56px); }
+  .body h2 { font-weight: 900; font-size: clamp(23px, 3vw, 30px); margin-bottom: 8px; }
+  .body h3 {
+    font-weight: 800;
+    font-size: 17px;
+    margin: 26px 0 10px;
+    color: var(--text);
+  }
+
+  .steps { margin: 0 0 0 20px; display: flex; flex-direction: column; gap: 10px; }
+  .steps li { font-size: 16.5px; line-height: 1.65; color: var(--text-2); padding-left: 4px; }
+  .steps li::marker { color: var(--lime); font-weight: 700; }
+
+  /* A mistake is a fact, so it gets a row, not a card and not a side stripe.
+     The leading numeral carries the emphasis and the count is legible at a
+     glance. Hairline rules do the grouping. */
+  .mistakes {
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: mistake;
+    border-top: 1px solid var(--line);
+  }
+  .mistake {
+    counter-increment: mistake;
+    position: relative;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 0 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .mistake::before {
+    content: counter(mistake, decimal-leading-zero);
+    grid-row: 1 / span 2;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-3);
+    padding-top: 1px;
+  }
+  .mistake h3 { margin: 0 0 6px; font-size: 16.5px; }
+  .mistake p {
+    grid-column: 2;
+    font-size: 15.5px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 520px) {
+    .mistake { grid-template-columns: 28px minmax(0, 1fr); gap: 0 12px; }
+  }
+
+  .prog {
+    margin-top: 18px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 24px;
+  }
+  .prog-nums {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .prog-nums b {
+    display: block;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(17px, 2.2vw, 22px);
+    color: var(--lime);
+    letter-spacing: -0.02em;
+  }
+  .prog-nums span {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+    font-weight: 600;
+  }
+  .prog p { font-size: 16px; color: var(--text-2); line-height: 1.65; }
+
+  .vars { margin: 16px 0 0 20px; display: flex; flex-direction: column; gap: 8px; }
+  .vars li { font-size: 16.5px; color: var(--text-2); line-height: 1.6; }
+  .vars li::marker { color: var(--lime); }
+
+  .faq { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .faq details {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 20px;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 16px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; color: var(--lime); font-size: 22px; line-height: 1; flex: none; }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p { margin-top: 12px; color: var(--text-2); font-size: 16px; line-height: 1.65; }
+
+  .related {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .related a {
+    display: block;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .related a:hover { border-color: rgba(181, 242, 61, 0.4); background: var(--bg-3); }
+  .related b { display: block; font-family: var(--display); font-weight: 800; font-size: 15px; }
+  .related span { display: block; margin-top: 4px; font-size: 12.5px; color: var(--text-3); }
+
+  .cta-wrap { margin-top: clamp(56px, 8vw, 80px); }
+  .cta {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: clamp(28px, 5vw, 44px);
+  }
+  .cta h2 { font-weight: 900; font-size: clamp(23px, 3.2vw, 30px); text-wrap: balance; }
+  .c-sub { margin-top: 14px; color: var(--text-2); font-size: 16px; max-width: 52ch; }
+</style>

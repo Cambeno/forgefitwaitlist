@@ -1,0 +1,171 @@
+---
+// Multi-column footer in the Hevy mould: product / company / resources /
+// guides. Every link here is a page that actually exists: no dead columns.
+const columns = [
+  {
+    title: 'Product',
+    links: [
+      { href: '/features', label: 'Features' },
+      { href: '/features#logger', label: 'Workout Logger' },
+      { href: '/features#ember', label: 'Ember AI Coach' },
+      { href: '/features#recovery', label: 'Recovery Tracking' },
+      { href: '/features#ranks', label: 'Ranks & Trophies' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { href: '/blog', label: 'Training Guides' },
+      { href: '/exercises', label: 'Exercise Library' },
+      { href: '/help', label: 'Help Centre' },
+      { href: '/rss.xml', label: 'RSS Feed' },
+    ],
+  },
+  {
+    title: 'Workout Splits',
+    links: [
+      { href: '/blog/push-pull-legs-split', label: 'Push / Pull / Legs' },
+      { href: '/blog/upper-lower-split', label: 'Upper / Lower Split' },
+      { href: '/blog/3-day-workout-split', label: '3 Day Workout Split' },
+      { href: '/blog/4-day-workout-split', label: '4 Day Workout Split' },
+      { href: '/blog/5-day-workout-split', label: '5 Day Workout Split' },
+      { href: '/blog/arnold-split', label: 'Arnold Split' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { href: '/privacy', label: 'Privacy Policy' },
+      { href: '/terms', label: 'Terms of Service' },
+      { href: '/community-guidelines', label: 'Community Guidelines' },
+      { href: 'mailto:hello@forgefit.fitness', label: 'Contact' },
+    ],
+  },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div class="brand-col">
+        <a class="brand" href="/">
+          <img src="/forge-logo.png" alt="" width="32" height="32" />
+          <span>ForgeFit</span>
+        </a>
+        <p class="tag">The AI gym coach in your pocket.<br />Train smarter. Get stronger.</p>
+      </div>
+
+      {
+        columns.map((col) => (
+          <nav class="col" aria-label={col.title}>
+            <h2>{col.title}</h2>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <div class="base">
+      <p>
+        &copy; {year} ForgeFit &middot; Campbell Blair &middot; ABN 14 278 891 663
+      </p>
+      <p class="disclaim">
+        ForgeFit is a training log and planning tool, not medical advice. Always train within your
+        ability and consult a qualified professional before starting a new programme.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--line);
+    padding: clamp(48px, 7vw, 72px) 0 48px;
+    margin-top: clamp(48px, 8vw, 96px);
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    gap: clamp(24px, 4vw, 48px);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .brand img {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+  .brand span {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+  }
+  .tag {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--text-3);
+    line-height: 1.6;
+  }
+  .col h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+  }
+  .col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .col a {
+    font-size: 14px;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .col a:hover {
+    color: var(--lime);
+  }
+
+  .base {
+    margin-top: clamp(40px, 6vw, 56px);
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .base p {
+    font-size: 13px;
+    color: var(--text-3);
+  }
+  .disclaim {
+    max-width: 70ch;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 900px) {
+    .cols {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 36px;
+    }
+    .brand-col {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
