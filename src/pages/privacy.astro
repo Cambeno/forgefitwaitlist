@@ -26,7 +26,7 @@ const toc: [string, string][] = [
 <Legal
   title="Privacy Policy"
   description="ForgeFit privacy policy: what we collect, why, who we share it with, how Apple Health, voice and AI features work, your rights under Australian and EU law, and how to export or delete everything."
-  updated="1 August 2026"
+  updated="2 August 2026"
   version="4.0"
   toc={toc}
 >
@@ -313,9 +313,11 @@ const toc: [string, string][] = [
     product-analytics events are sent.
   </p>
   <p>
-    Separately, <strong>Sentry</strong> records technical details of failed server requests for
-    diagnostics. This is server-side error monitoring, not device or behavioural tracking, and it is
-    necessary to keep the service working.
+    Separately, <strong>Sentry</strong> records technical details of errors so we can fix them: failed
+    server requests, and crashes in the app itself. A crash report describes the fault, not you, and
+    covers the error, the screen it happened on, your device model and the app version. It is error
+    monitoring, not behavioural tracking. The same
+    <em>"Share anonymous usage data"</em> switch turns crash reporting off along with analytics.
   </p>
 
   <h2 id="notifications">7. Push notifications</h2>
@@ -387,7 +389,7 @@ const toc: [string, string][] = [
         <tr><td>Anthropic</td><td>AI coaching, plan generation, critique</td><td>US</td></tr>
         <tr><td>Google</td><td>Gemini image generation; Sign in with Google</td><td>US</td></tr>
         <tr><td>PostHog</td><td>Anonymous product analytics (opt-out available)</td><td>US / EU</td></tr>
-        <tr><td>Sentry</td><td>Server error diagnostics</td><td>US</td></tr>
+        <tr><td>Sentry</td><td>Server error and app crash diagnostics (opt-out available)</td><td>US</td></tr>
         <tr><td>Resend</td><td>Transactional and waitlist email delivery</td><td>US</td></tr>
         <tr><td>RevenueCat</td><td>Subscription management (inert until paid tiers launch)</td><td>US</td></tr>
         <tr><td>Stripe</td><td>Web subscription billing (when applicable)</td><td>US</td></tr>
