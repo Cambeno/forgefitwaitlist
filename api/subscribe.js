@@ -265,12 +265,14 @@ export default async function handler(req, res) {
     });
   }
 
-  // 12. Fire LaunchList in parallel (backup tracking)
-  fetch('https://getlaunchlist.com/s/tMLE9k', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: 'email=' + encodeURIComponent(normalEmail),
-  }).catch(() => {});
+  // LaunchList used to be fired here as backup tracking. Removed 2026-08-03:
+  // it was an undisclosed third-party processor (absent from the privacy
+  // policy's list) receiving every address, and it ran BEFORE double opt-in —
+  // handing out addresses the code deliberately withholds from the Resend
+  // audience until they are confirmed. Supabase is the source of truth, so it
+  // was redundant as well as leaky. Closing the account was not enough on its
+  // own: the fetch still transmitted the address, and the swallowed rejection
+  // meant that would never have surfaced.
 
   return res.status(200).json({ success: true, position });
 }
